@@ -7,7 +7,11 @@ export default function Form() {
 
     const [searchQuery, setSearchQuery] = useState({
         key: '',
-        trackQuery: ''
+        query: '',
+        type: 'track',
+        startYear: '',
+        endYear: '',
+        genres: []
     })
 
     async function getAuth(){
@@ -19,7 +23,7 @@ export default function Form() {
     function handleSearch(event){
     setSearchQuery({
         ...searchQuery,
-        trackQuery: event.target.value
+        query: event.target.value
         })
     }
 

@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
+const e = require("express");
 
 require("dotenv").config();
 
@@ -40,13 +41,31 @@ app.get(`/auth`, async (request, response) =>{
 });
 
 app.post(`/search`, async (request, response) =>{
+
+  let currentQuery = request.body.query;
+  if (request.body.startYear && request.body.endYear){
+    currentQuery = currentQuery+' year:'+request.body.startYear+'-'+request.body.endYear;
+  }
+  else if (request.body.startYear || request.body.endYear){
+    currentQuery = currentQuery+' year:'+(request.body.startYear||request.body.endYear)
+  }
+
+  /*
+  if (request.body.genres){
+    currentQuery+' genre:'
+    genres.every((genre)=>
+
+    );
+  }*/
+
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {
       Authorization: `Bearer ${request.body.key}`
     }
   }
-    fetch(API+request.body.trackQuery+`&type=track`, searchParameters)
+
+    fetch(API+currentQuery+`&type=track`, searchParameters)
   .then(result => result.json())
   .then(data => response.status(200).json(data))
 });
