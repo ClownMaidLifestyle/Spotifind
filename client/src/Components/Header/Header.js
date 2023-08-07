@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header>
-      <nav>
+      <nav className="navbar">
         <ul>
           <li>
             <Link to="/#">Home</Link>
@@ -15,10 +15,10 @@ const Header = () => {
             <Link to="/#about">About</Link>
           </li>
         </ul>
+       <div className="logo">
+        <image src="/client/src/images/logo.png" alt="logo" />
+              </div>
       </nav>
-      <div className="logo">
-        <img src="/images/logo.svg" alt="Logo" />
-      </div>
     </header>
   );
 };

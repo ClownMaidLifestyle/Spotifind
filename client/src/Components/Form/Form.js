@@ -33,9 +33,9 @@ export default function Form() {
     return (
     <div>
         <button onClick={()=>getAuth()}>Magic Access Key Spawner</button>
-        <form onSubmitCapture={(event) => doSearch(event)}>
+        <form className='search-form' onSubmitCapture={(event) => doSearch(event)}>
             <input placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
-            <button type="submit">Submit</button>
+            <button className='submit-btn' type="submit">Submit</button>
         </form>
     </div>
     )
