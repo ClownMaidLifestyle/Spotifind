@@ -1,4 +1,3 @@
-
 import "./Header.css";
 // Header.js
 import React from "react";
@@ -18,11 +17,10 @@ const Header = () => {
         </ul>
       </nav>
       <div className="logo">
-        <img src="./Header.logo/logo.png" alt="Logo" />
+        <img src="/images/logo.svg" alt="Logo" />
       </div>
     </header>
   );
 };
 
 export default Header;
-
