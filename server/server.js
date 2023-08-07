@@ -18,15 +18,15 @@ app.get("/", (request, response) => {
 });
 
 //CREATE
-app.post();
+//app.post();
 
 //READ
-app.get();
+//app.get();
 
 //DELETE
-app.delete();
+//app.delete();
 
 //UPDATE
-app.put();
+//app.put();
 
 app.listen(PORT, () => console.log(`app is listening on port ${PORT}`));
