@@ -1,23 +1,32 @@
-
 import "./App.css";
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from "./Header";
+import Home from "./Pages/Home/Home";
+import About from "./Pages/About/About";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
 
-const Home = () => <h1>Home</h1>;
-const About = () => <h1>About</h1>;
+// import LoginButton from "./Login";
+// import LogoutButton from "./Logout";
+// import Profile from "./Profile";
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-        </Switch>
-      </div>
-    </Router>
+    <>
+      <BrowserRouter>
+        <div className="">
+          <Header />
+          {/* <LoginButton />
+          <LogoutButton />
+          <Profile /> */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </>
   );
 };
 
