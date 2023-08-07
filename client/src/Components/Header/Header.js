@@ -12,11 +12,10 @@ const Header = () => {
             <Link to="/#">Home</Link>
           </li>
           <li>
-            <Link to="/#about">About</Link>
+            <Link to="/client/src/Pages/About">About</Link>
           </li>
         </ul>
        <div className="logo">
-        <image src="/client/src/images/logo.png" alt="logo" />
               </div>
       </nav>
     </header>

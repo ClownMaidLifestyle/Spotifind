@@ -5,7 +5,6 @@ import About from "./Pages/About/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
-
 // import LoginButton from "./Login";
 // import LogoutButton from "./Logout";
 // import Profile from "./Profile";
@@ -20,8 +19,8 @@ const App = () => {
           <LogoutButton />
           <Profile /> */}
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            <Route path="./Pages/Home" element={<Home />} />
+            <Route path="./Pages/About" element={<About />} />
           </Routes>
           <Footer />
         </div>
