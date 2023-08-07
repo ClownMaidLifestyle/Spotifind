@@ -39,6 +39,19 @@ app.get(`/auth`, async (request, response) =>{
     .catch(error => console.log(error));
 });
 
+app.post(`/search`, async (request, response) =>{
+  const API = `https://api.spotify.com/v1/search?q=`;
+  console.log(request.body.trackQuery);
+  const searchParameters = {
+    headers: {
+      Authorization: `Bearer ${request.body.key}`
+    }
+  }
+    fetch(API+request.body.trackQuery+`&type=track`, searchParameters)
+  .then(result => result.json())
+  .then(data => response.status(200).json(data))
+});
+
 //MongoDB requests
 
 //CREATE
