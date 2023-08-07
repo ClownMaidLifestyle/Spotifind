@@ -40,13 +40,20 @@ app.get(`/auth`, async (request, response) =>{
 });
 
 app.post(`/search`, async (request, response) =>{
+
+  let currentQuery = request.body.query;
+  if (request.body.year){
+    currentQuery = currentQuery+' year:'+request.body.year;
+  }
+
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {
       Authorization: `Bearer ${request.body.key}`
     }
   }
-    fetch(API+request.body.trackQuery+`&type=track`, searchParameters)
+
+    fetch(API+currentQuery+`&type=track`, searchParameters)
   .then(result => result.json())
   .then(data => response.status(200).json(data))
 });
