@@ -25,16 +25,18 @@ const clientId = process.env.Client_Id
 const clientSecret = process.env.Client_Secret
 
 app.get(`/auth`, async (request, response) =>{
-  const AuthParams = {
+  const AuthParamaters = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: 'grant_type=client_credentials&client_id='+clientId+'&client_secret='+clientSecret
   }
-  fetch('http://accounts.spotify.com/api/token', AuthParams)
-  .then(result => result.json())
-  .then(data => response.status(200).json(data))
+
+    fetch(`https://accounts.spotify.com/api/token`, AuthParamaters)
+    .then(result => result.json())
+    .then(data => response.status(200).json(data))
+    .catch(error => console.log(error));
 });
 
 //MongoDB requests
