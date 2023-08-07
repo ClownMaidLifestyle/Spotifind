@@ -9,7 +9,8 @@ export default function Form() {
         key: '',
         query: '',
         type: 'track',
-        year: ''
+        startYear: '',
+        endYear: ''
     })
 
     async function getAuth(){
