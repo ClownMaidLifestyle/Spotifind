@@ -50,6 +50,14 @@ app.post(`/search`, async (request, response) =>{
     currentQuery = currentQuery+' year:'+(request.body.startYear||request.body.endYear)
   }
 
+  /*
+  if (request.body.genres){
+    currentQuery+' genre:'
+    genres.every((genre)=>
+
+    );
+  }*/
+
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {

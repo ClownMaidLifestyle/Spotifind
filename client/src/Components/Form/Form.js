@@ -10,7 +10,8 @@ export default function Form() {
         query: '',
         type: 'track',
         startYear: '',
-        endYear: ''
+        endYear: '',
+        genres: []
     })
 
     async function getAuth(){
