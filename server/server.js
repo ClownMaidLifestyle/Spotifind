@@ -3,7 +3,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
-require("dotenv").config
 
 require("dotenv").config();
 
