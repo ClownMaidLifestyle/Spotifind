@@ -41,7 +41,6 @@ app.get(`/auth`, async (request, response) =>{
 
 app.post(`/search`, async (request, response) =>{
   const API = `https://api.spotify.com/v1/search?q=`;
-  console.log(request.body.trackQuery);
   const searchParameters = {
     headers: {
       Authorization: `Bearer ${request.body.key}`

@@ -13,7 +13,7 @@ export default function Form() {
     async function getAuth(){
         const API = "http://localhost:8181/auth"
         const res = await axios.get(API);
-        console.log(res.data.access_token);
+        searchQuery.key = res.data.access_token;
     }
 
     function handleSearch(event){
@@ -27,7 +27,7 @@ export default function Form() {
         event.preventDefault()
         const API = 'http://localhost:8181/search'
         const searchReturn = await axios.post(API, searchQuery)
-        console.log(searchReturn)
+        console.log(searchReturn);
     }
 
     return (
