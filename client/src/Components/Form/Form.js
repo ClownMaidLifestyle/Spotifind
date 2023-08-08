@@ -10,6 +10,12 @@ import { genres } from "./genres";
 export default function Form() {
   const [returnedTracks, setReturnedTracks] = useState([]);
 
+  async function getAuth() {
+    const API = "http://localhost:8181/auth";
+    const res = await axios.get(API);
+    searchQuery.key = res.data.access_token;
+  }
+
   useEffect(() => {
     getAuth();
   });
@@ -41,9 +47,9 @@ export default function Form() {
     }));
   }
 
-  async function spotifyLogin() {
-    const API = "http://localhost:8181/login";
-  }
+  // async function spotifyLogin() {
+  //   const API = "http://localhost:8181/login";
+  // }
 
   function handleSearch(event) {
     console.log(event);
@@ -85,6 +91,7 @@ export default function Form() {
       const API = "http://localhost:8181/search";
       let searchReturn = await axios.post(API, searchQuery);
       searchReturn = searchReturn.data.tracks.items;
+      setReturnedTracks(searchReturn);
       console.log("returns:" + searchReturn);
       for (let i = 0; i < 20; i++) {
         let track = [];
@@ -113,7 +120,7 @@ export default function Form() {
   }
 
   return (
-    <div className="form-div">
+    <div className="grid-container">
       {returnedTracks.map((song, key) => (
         <div className="grid-item" key={song.id}>
           <SongCard
