@@ -47,3 +47,6 @@ p {
   transition: all linear 0.5s;
   cursor: pointer;
 }
+a{
+  color: white;
+}

@@ -19,22 +19,24 @@ export default function About() {
           <p className="about">
             Spotifind is a single page web app that utilised the Spotify API to
             allow a user to search through the full spotify database of songs
-            The problem: The spotify in-app search feature is rather minimal and
+            The problem: <br></br>The spotify in-app search feature is rather minimal and
             doesn't allow the user to apply filters to the full extent that the
-            search query is capable of, Spotifind will allow users to more
-            accurately search songs
-            <hr></hr>
+            search query is capable of, <br></br>Spotifind will allow users to more
+            accurately search songs<br></br><br></br>
+            <hr></hr><br></br>
             &nbsp; The Team: Elisa, (github link) (linkedin link) Shaylee,
             (github link) (linkedin link) Joe, (github link) (linkedin link)
-            Nick, (github link) (linkedin link) If you would like to look at the
-            code please feel free at the GitHub link below
+            Nick, (github link) (linkedin link)
+            <br></br>
+            If you would like to look at the
+            code please feel free at the GitHub link below &nbsp; <br></br>
             <a
               className="github"
               href="https://github.com/ClownMaidLifestyle/Spotifind"
             >
               GitHub
             </a>
-          </p>
+          </p><br></br><br></br>
         </div>
       </main>
     </>
