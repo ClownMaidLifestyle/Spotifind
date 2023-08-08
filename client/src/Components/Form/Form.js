@@ -40,23 +40,9 @@ export default function Form() {
     genres: [],
   });
 
-  function handleSearch(event) {
-    setSearchQuery((prevQuery) => ({
-      ...prevQuery,
-      trackQuery: event.target.value,
-    }));
-  }
-
-
   // async function spotifyLogin() {
   //   const API = "http://localhost:8181/login";
   // }
-
-  async function getAuth(){
-    const API = "http://localhost:8181/auth"
-    const res = await axios.get(API);
-    searchQuery.key = res.data.access_token;
-}
 
   function handleSearch(event) {
     console.log(event);
@@ -67,9 +53,15 @@ export default function Form() {
     }
 
     const handleGenre = (selectedOption) => {
+        if (selectedOption != false){
             let i = selectedOption.length - 1;
             console.log(selectedOption);
             searchQuery.genres.push(selectedOption[i].value)
+        }
+        else{
+            searchQuery.genres.pop();
+        }
+
         console.log(searchQuery.genres);
     }
 
@@ -83,7 +75,7 @@ export default function Form() {
             for (let i = 0; i < searchQuery.genres.length; i++){
                 for (let y = 0; y < genres.length; y++){
                     if (genres[y].toLowerCase()==searchQuery.genres[i].toLowerCase()){
-                        console.log(genres[y]);
+                        genres[y].replace(" ", "_")
                         genreCheck++;
                     }
                 }
@@ -97,15 +89,19 @@ export default function Form() {
         }
         console.log(searchValid);
         if (searchValid){
-            console.log("searching..." +searchQuery.genres);
+            console.log("searching... "+searchQuery);
             const API = 'http://localhost:8181/search'
             let searchReturn = await axios.post(API, searchQuery)
+            console.log(searchReturn);
+            let resultsNumber = searchReturn.data.tracks.items.length;
+            console.log(resultsNumber);
             searchReturn = searchReturn.data.tracks.items;
             console.log("returns:"+searchReturn);
-            for (let i = 0; i < 20; i++){
-                let track = [];
+            for (let i = 0; i < resultsNumber; i++){
+                let track = [];;
+                    track.push(searchReturn[i].name);
 
-                track.push(searchReturn[i].name);
+                
                 track.push(searchReturn[i].album.name);
                 track.push(searchReturn[i].album.images[0]);
 
@@ -125,8 +121,11 @@ export default function Form() {
         }
         else{
             console.log("Search failed");
-
         }
+        if (!trackList){
+            trackList = "null";
+        }
+        console.log(trackList);
     }
 
   return (
@@ -144,7 +143,8 @@ export default function Form() {
         <input
           placeholder="Track name"
           onChangeCapture={(event) => handleSearch(event)}
-        ></input>
+        >
+        </input>
         <Select
           options={allGenres}
           isMulti
