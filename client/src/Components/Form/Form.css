@@ -1,15 +1,73 @@
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+.form-div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 50px;
+  margin-top: 20px;
 }
-sub-form {
+
+/* Style for the grid container */
+.grid-container {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 50px;
+  margin-top: 20px;
+}
+
+/* Style for each song card */
+.grid-item {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #250053;
+  color: white;
+}
+
+/* Style for song card title */
+.grid-item h2 {
+
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Style for song card artist */
+.grid-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #a57fd4;
+}
+.form-div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 50px;
+  margin-top: 20px;
+}
+
+/* Style for the grid container */
+.grid-container {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 50px;
+  margin-top: 20px;
+}
+
+/* Style for each song card */
+.grid-item {
   text-align: center;
   justify-content: center;
   align-items: center;
   height: 200px;
   width: 100%;
   display: flex;
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #250053;
+  color: white;
 }
 .form {
   margin: 0;
@@ -47,6 +105,21 @@ main {
   height: 45px;
   font-size: 15px;
   letter-spacing: 1.5px;
+
+
+/* Style for song card title */
+.grid-item h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Style for song card artist */
+.grid-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #a57fd4;
 
 }
 .sub-btn:hover {

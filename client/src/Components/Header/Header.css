@@ -13,6 +13,25 @@ body {
     #000000
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   font-size: 20px;
+
+.navbar li a {
+  text-decoration: none;
+  color: rgb(129, 154, 146);
+  display: inline;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  box-shadow: 0 9px 8px rgba(0, 0, 0, 0.1);
+  line-height: 2.2;
+}
+
+.navbar a:hover {
+  color: black;
+  border-radius: 10px;
+  transition: linear 0.6s;
+}
+
   box-sizing: border-box;
 }
 .nav {

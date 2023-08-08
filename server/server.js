@@ -44,7 +44,7 @@ app.post(`/search`, async (request, response) =>{
 
   console.log("building query...");
   let currentQuery = request.body.query;
-
+  console.log(request.body);
   if (request.body.genres){
     for (let i = 0; i < request.body.genres.length; i++)
     currentQuery = currentQuery +"+genre:" + request.body.genres[i];
@@ -63,10 +63,23 @@ app.post(`/search`, async (request, response) =>{
       Authorization: `Bearer ${request.body.key}`
     }
   }
+
+  console.log (currentQuery);
   console.log("fetching...");
     fetch(API+currentQuery+`&type=track`, searchParameters)
   .then(result => result.json())
   .then(data => response.status(200).json(data))
+});
+
+app.get('/login', function(request, response){
+  const API = `https://accounts.spotify.com/authorize`
+  const redirectURI =  "https://localhost:8181/"
+  const scopes = [
+    "playlist-read-private",
+    "playlist-read-collaborative",
+    "playlist-modify-private",
+    "playlist-modify-public"
+  ]
 });
 
 //MongoDB requests
