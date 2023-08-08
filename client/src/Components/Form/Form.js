@@ -1,46 +1,38 @@
-
-import React from 'react'
-import axios from "axios"
-import {useState, useEffect} from "react"
+import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import SongCard from "../SongCard/SongCard";
-import Select from "react-select"
-import './Form.css';
+import Select from "react-select";
+import "./Form.css";
 
-import {genres} from "./genres"
-
+import { genres } from "./genres";
 
 export default function Form() {
-  const [searchQuery, setSearchQuery] = useState({
-    key: "",
-    trackQuery: "",
-  });
   const [returnedTracks, setReturnedTracks] = useState([]);
 
+  useEffect(() => {
+    getAuth();
+  });
 
-    useEffect(() =>{
-        getAuth();
-    });
+  const allGenres = [];
+  for (let i = 0; i < genres.length + 1; i++) {
+    const genreObj = {
+      value: genres[i],
+      label: genres[i],
+    };
+    allGenres.push(genreObj);
+  }
 
+  let trackList = [];
 
-    const allGenres = []
-        for(let i = 0; i<genres.length+1; i++){
-            const genreObj = {
-                value: genres[i],
-                label: genres[i] }
-            allGenres.push(genreObj)
-    }
-
-    let trackList = [];
-
-    const [searchQuery, setSearchQuery] = useState({
-        key: '',
-        query: '',
-        type: 'track',
-        startYear: '',
-        endYear: '',
-        genres: []
-    })
-
+  const [searchQuery, setSearchQuery] = useState({
+    key: "",
+    query: "",
+    type: "track",
+    startYear: "",
+    endYear: "",
+    genres: [],
+  });
 
   function handleSearch(event) {
     setSearchQuery((prevQuery) => ({
@@ -49,81 +41,76 @@ export default function Form() {
     }));
   }
 
+  async function spotifyLogin() {
+    const API = "http://localhost:8181/login";
+  }
 
-    async function spotifyLogin(){
-        const API = "http://localhost:8181/login"
-
-    }
-
-    function handleSearch(event){
-        console.log(event);
+  function handleSearch(event) {
+    console.log(event);
     setSearchQuery({
-        ...searchQuery,
-        query: event.target.value
-        })
+      ...searchQuery,
+      query: event.target.value,
+    });
+  }
+
+  const handleGenre = (selectedOption) => {
+    searchQuery.genres.push(selectedOption[0].value);
+    console.log(searchQuery.genres);
+  };
+
+  async function doSearch(event) {
+    let genreCheck = 0;
+    let searchValid = false;
+    event.preventDefault();
+
+    console.log(searchQuery.genres);
+    if (searchQuery.genres) {
+      for (let i = 0; i < searchQuery.genres.length; i++) {
+        for (let y = 0; y < genres.length; y++) {
+          if (genres[y].toLowerCase() == searchQuery.genres[i].toLowerCase()) {
+            console.log(genres[y]);
+            genreCheck++;
+          }
+        }
+      }
+      if (genreCheck == searchQuery.genres.length) {
+        searchValid = true;
+      }
+    } else {
+      searchValid = true;
     }
+    console.log(searchValid);
+    if (searchValid) {
+      console.log("searching..." + searchQuery.genres);
+      const API = "http://localhost:8181/search";
+      let searchReturn = await axios.post(API, searchQuery);
+      searchReturn = searchReturn.data.tracks.items;
+      console.log("returns:" + searchReturn);
+      for (let i = 0; i < 20; i++) {
+        let track = [];
 
-    const handleGenre = (selectedOption) => {
-        searchQuery.genres.push(selectedOption[0].value)
-        console.log(searchQuery.genres)
+        track.push(searchReturn[i].name);
+        track.push(searchReturn[i].album.name);
+        track.push(searchReturn[i].album.images[0]);
+
+        let artists = searchReturn[i].artists;
+        let artistarray = [];
+
+        for (let y = 0; y < artists.length; y++) {
+          artistarray.push(artists[y].name);
+        }
+        track.push(artistarray);
+        track.push(searchReturn[i].external_urls.spotify);
+
+        track.push(searchReturn[i].preview_url);
+
+        trackList.push(track);
+      }
+    } else {
+      console.log("Search failed");
     }
-
-    async function doSearch(event){
-        let genreCheck = 0;
-        let searchValid = false;
-        event.preventDefault()
-
-        console.log(searchQuery.genres);
-        if (searchQuery.genres){
-            for (let i = 0; i < searchQuery.genres.length; i++){
-                for (let y = 0; y < genres.length; y++){
-                    if (genres[y].toLowerCase()==searchQuery.genres[i].toLowerCase()){
-                        console.log(genres[y]);
-                        genreCheck++;
-                    }
-                }
-            }
-            if (genreCheck == searchQuery.genres.length){
-                searchValid=true;
-            }
-        }
-        else{
-            searchValid=true;
-        }
-        console.log(searchValid);
-        if (searchValid){
-            console.log("searching..." +searchQuery.genres);
-            const API = 'http://localhost:8181/search'
-            let searchReturn = await axios.post(API, searchQuery)
-            searchReturn = searchReturn.data.tracks.items;
-            console.log("returns:"+searchReturn);
-            for (let i = 0; i < 20; i++){
-                let track = [];
-
-                track.push(searchReturn[i].name);
-                track.push(searchReturn[i].album.name);
-                track.push(searchReturn[i].album.images[0]);
-
-                let artists = searchReturn[i].artists;
-                let artistarray = [];
-            
-                for(let y = 0; y < artists.length; y++){
-                    artistarray.push(artists[y].name);
-                }
-                track.push(artistarray);
-                track.push(searchReturn[i].external_urls.spotify);
-
-                track.push(searchReturn[i].preview_url)
-
-                trackList.push(track);
-            }
-        }
-        else{
-            console.log("Search failed");
-        }
-        console.log(trackList);
-    }
-
+    console.log(trackList);
+  }
 
   return (
     <div className="form-div">
@@ -141,11 +128,15 @@ export default function Form() {
           placeholder="Track name"
           onChangeCapture={(event) => handleSearch(event)}
         ></input>
-        <Select options={allGenres} isMulti onChange={handleGenre} autoFocus={true}/>
+        <Select
+          options={allGenres}
+          isMulti
+          onChange={handleGenre}
+          autoFocus={true}
+        />
         <button type="submit">Submit</button>
         {/* <Select options={}/> */}
       </form>
-
     </div>
   );
 }
