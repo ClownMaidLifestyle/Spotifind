@@ -16,6 +16,8 @@ export default function Form() {
             allGenres.push(genreObj)
     }
 
+    let trackList = [];
+
     const [searchQuery, setSearchQuery] = useState({
         key: '',
         query: '',
@@ -29,6 +31,11 @@ export default function Form() {
         const API = "http://localhost:8181/auth"
         const res = await axios.get(API);
         searchQuery.key = res.data.access_token;
+    }
+
+    async function spotifyLogin(){
+        const API = "http://localhost:8181/login"
+
     }
 
     function handleSearch(event){
@@ -67,8 +74,6 @@ export default function Form() {
             const API = 'http://localhost:8181/search'
             let searchReturn = await axios.post(API, searchQuery)
             searchReturn = searchReturn.data.tracks.items;
-            console.log(searchReturn);
-            let trackList = [];
             for (let i = 0; i < 20; i++){
                 let track = [];
 
@@ -78,7 +83,6 @@ export default function Form() {
 
                 let artists = searchReturn[i].artists;
                 let artistarray = [];
-                console.log(artists);
             
                 for(let y = 0; y < artists.length; y++){
                     artistarray.push(artists[y].name);
@@ -86,13 +90,13 @@ export default function Form() {
                 track.push(artistarray);
                 track.push(searchReturn[i].external_urls.spotify);
 
-                console.log(track);
                 trackList.push(track);
             }
         }
         else{
             console.log("Search failed");
         }
+        console.log(trackList);
     }
 
 

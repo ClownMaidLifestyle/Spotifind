@@ -69,6 +69,10 @@ app.post(`/search`, async (request, response) =>{
   .then(data => response.status(200).json(data))
 });
 
+app.get('/login', function(request, response){
+  
+});
+
 //MongoDB requests
 
 //CREATE
