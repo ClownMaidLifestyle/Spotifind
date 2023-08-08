@@ -57,8 +57,30 @@ export default function Form() {
         if (searchValid){
             console.log("searching...");
             const API = 'http://localhost:8181/search'
-            const searchReturn = await axios.post(API, searchQuery)
+            let searchReturn = await axios.post(API, searchQuery)
+            searchReturn = searchReturn.data.tracks.items;
             console.log(searchReturn);
+            let trackList = [];
+            for (let i = 0; i < 20; i++){
+                let track = [];
+
+                track.push(searchReturn[i].name);
+                track.push(searchReturn[i].album.name);
+                track.push(searchReturn[i].album.images[0]);
+
+                let artists = searchReturn[i].artists;
+                let artistarray = [];
+                console.log(artists);
+            
+                for(let y = 0; y < artists.length; y++){
+                    artistarray.push(artists[y].name);
+                }
+                track.push(artistarray);
+                track.push(searchReturn[i].external_urls.spotify);
+
+                console.log(track);
+                //trackList.push(track);
+            }
         }
         else{
             console.log("Search failed");
