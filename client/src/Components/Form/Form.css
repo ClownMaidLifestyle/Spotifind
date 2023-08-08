@@ -1,0 +1,40 @@
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+sub-form {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  color: red;
+  display: flex;
+  transform: translate(-50%);
+}
+.form {
+  display: flex;
+}
+magic.btn {
+  display: none;
+}
+.input {
+  display: block;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
+  
+}
+main {
+  height: 400px;
+  justify-content: center;
+  min-width:320px;
+}
+sub-btn {
+  display: block;
+    box-shadow: 0 9px 8px rgba(0,0,0,0.1);
+justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+}

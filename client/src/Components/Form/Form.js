@@ -66,11 +66,12 @@ export default function Form() {
     }
 
     return (
-    <div>
-        <button onClick={()=>getAuth()}>Magic Access Key Spawner</button>
-        <form onSubmitCapture={(event) => doSearch(event)}>
-            <input placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
-            <button type="submit">Submit</button>
+    <div className='form'>
+            <button className='magic.btn' onClick={() => getAuth()}>Magic Access Key Spawner</button>
+            
+        <form className='sub-form' onSubmitCapture={(event) => doSearch(event)}>
+            <input className='input' placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
+            <button className='sub.btn' type="submit">Submit</button>
         </form>
     </div>
     )

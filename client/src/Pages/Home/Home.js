@@ -15,7 +15,6 @@ export default function Home() {
         <link rel="canonical" href="/" />
       </Helmet>
       <main>
-        <h2>Home Page</h2>
         <Form />
       </main>
     </>
