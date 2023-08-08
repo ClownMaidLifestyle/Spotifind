@@ -1,7 +1,10 @@
 import React from 'react'
 import axios from "axios"
 import {useState} from "react"
-import './Form.css'
+import './Form.css';
+
+import {genres} from "./genres"
+
 
 export default function Form() {
 
@@ -28,10 +31,38 @@ export default function Form() {
     }
 
     async function doSearch(event){
+        let genreCheck = 0;
+        let searchValid = false;
         event.preventDefault()
-        const API = 'http://localhost:8181/search'
-        const searchReturn = await axios.post(API, searchQuery)
-        console.log(searchReturn);
+        if (searchQuery.genres){
+            for (let i = 0; i < searchQuery.genres.length; i++){
+                for (let y = 0; y < genres.length; y++){
+                    if (genres[y].toLowerCase()==searchQuery.genres[i].toLowerCase()){
+                        console.log(genres[y]);
+                        genreCheck++;
+                    }
+                }
+            }
+            if (genreCheck == searchQuery.genres.length){
+                searchValid=true;
+                searchQuery.genres.map((genre) =>{
+                    genre = genre.charAt(0).toUpperCase() + genre.slice(1);
+                });
+            }
+        }
+        else{
+            searchValid=true;
+        }
+        console.log(searchValid);
+        if (searchValid){
+            console.log("searching...");
+            const API = 'http://localhost:8181/search'
+            const searchReturn = await axios.post(API, searchQuery)
+            console.log(searchReturn);
+        }
+        else{
+            console.log("Search failed");
+        }
     }
 
     return (

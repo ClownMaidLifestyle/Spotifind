@@ -42,21 +42,20 @@ app.get(`/auth`, async (request, response) =>{
 
 app.post(`/search`, async (request, response) =>{
 
+  console.log("building query...");
   let currentQuery = request.body.query;
+
+  if (request.body.genres){
+    for (let i = 0; i < request.body.genres.length; i++)
+    currentQuery = currentQuery +"+genre:" + request.body.genres[i];
+  }
+
   if (request.body.startYear && request.body.endYear){
     currentQuery = currentQuery+' year:'+request.body.startYear+'-'+request.body.endYear;
   }
   else if (request.body.startYear || request.body.endYear){
     currentQuery = currentQuery+' year:'+(request.body.startYear||request.body.endYear)
-  }
-
-  /*
-  if (request.body.genres){
-    currentQuery+' genre:'
-    genres.every((genre)=>
-
-    );
-  }*/
+  };
 
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
@@ -64,7 +63,7 @@ app.post(`/search`, async (request, response) =>{
       Authorization: `Bearer ${request.body.key}`
     }
   }
-
+  console.log("fetching...");
     fetch(API+currentQuery+`&type=track`, searchParameters)
   .then(result => result.json())
   .then(data => response.status(200).json(data))
