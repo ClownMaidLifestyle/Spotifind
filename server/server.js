@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
+const e = require("express");
 
 require("dotenv").config();
 
@@ -40,15 +41,45 @@ app.get(`/auth`, async (request, response) =>{
 });
 
 app.post(`/search`, async (request, response) =>{
+
+  console.log("building query...");
+  let currentQuery = request.body.query;
+  console.log(request.body);
+  if (request.body.genres){
+    for (let i = 0; i < request.body.genres.length; i++)
+    currentQuery = currentQuery +"+genre:" + request.body.genres;
+  }
+
+  if (request.body.startYear && request.body.endYear){
+    currentQuery = currentQuery+' year:'+request.body.startYear+'-'+request.body.endYear;
+  }
+  else if (request.body.startYear || request.body.endYear){
+    currentQuery = currentQuery+' year:'+(request.body.startYear||request.body.endYear)
+  };
+
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {
       Authorization: `Bearer ${request.body.key}`
     }
   }
-    fetch(API+request.body.trackQuery+`&type=track`, searchParameters)
+
+  console.log (currentQuery);
+  console.log("fetching...");
+    fetch(API+currentQuery+`&type=track`, searchParameters)
   .then(result => result.json())
   .then(data => response.status(200).json(data))
+});
+
+app.get('/login', function(request, response){
+  const API = `https://accounts.spotify.com/authorize`
+  const redirectURI =  "https://localhost:8181/"
+  const scopes = [
+    "playlist-read-private",
+    "playlist-read-collaborative",
+    "playlist-modify-private",
+    "playlist-modify-public"
+  ]
 });
 
 //MongoDB requests
