@@ -45,10 +45,19 @@ export default function Form() {
     }
 
     function handleSearch(event){
+        console.log(event);
     setSearchQuery({
         ...searchQuery,
         query: event.target.value
         })
+    }
+
+    const handleGenre = (selectedOption) => {
+        selectedOption = selectedOption[0].value;
+        setSearchQuery({
+            ...searchQuery,
+            genres: [selectedOption]
+            })
     }
 
     async function doSearch(event){
@@ -114,7 +123,7 @@ export default function Form() {
         <form onSubmitCapture={(event) => doSearch(event)}>
             <input placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
             <button type="submit">Submit</button>
-            <Select options={allGenres}/>
+            <Select options={allGenres} isMulti onChange={handleGenre} autoFocus={true}/>
         </form>
 
     </div>

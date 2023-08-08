@@ -63,6 +63,8 @@ app.post(`/search`, async (request, response) =>{
       Authorization: `Bearer ${request.body.key}`
     }
   }
+
+  console.log (currentQuery);
   console.log("fetching...");
     fetch(API+currentQuery+`&type=track`, searchParameters)
   .then(result => result.json())
@@ -70,7 +72,14 @@ app.post(`/search`, async (request, response) =>{
 });
 
 app.get('/login', function(request, response){
-  const returnLink = `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=http://localhost:8181&response_type="token"`
+  const API = `https://accounts.spotify.com/authorize`
+  const redirectURI =  "https://localhost:8181/"
+  const scopes = [
+    "playlist-read-private",
+    "playlist-read-collaborative",
+    "playlist-modify-private",
+    "playlist-modify-public"
+  ]
 });
 
 //MongoDB requests
