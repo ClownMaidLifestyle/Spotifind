@@ -87,7 +87,7 @@ export default function Form() {
                 track.push(searchReturn[i].external_urls.spotify);
 
                 console.log(track);
-                //trackList.push(track);
+                trackList.push(track);
             }
         }
         else{
