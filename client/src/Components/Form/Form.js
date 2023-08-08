@@ -119,11 +119,14 @@ export default function Form() {
 
 
     return (
-    <div>
-        <form onSubmitCapture={(event) => doSearch(event)}>
-            <input placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
-            <button type="submit">Submit</button>
+
+    <div className='form'>
+            
+        <form className='sub-form' onSubmitCapture={(event) => doSearch(event)}>
+            <input className='input' placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
+            <button className='sub.btn' type="submit">Submit</button>
             <Select options={allGenres} isMulti onChange={handleGenre} autoFocus={true}/>
+
         </form>
 
     </div>
