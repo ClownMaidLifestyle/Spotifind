@@ -53,8 +53,10 @@ export default function Form() {
     }
 
     const handleGenre = (selectedOption) => {
-        searchQuery.genres.push(selectedOption[0].value)
-        console.log(searchQuery.genres)
+            let i = selectedOption.length;
+            console.log(i);
+            searchQuery.genres.push(selectedOption[i].value)
+        console.log(searchQuery.genres);
     }
 
     async function doSearch(event){
