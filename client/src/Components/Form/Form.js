@@ -74,6 +74,7 @@ export default function Form() {
             const API = 'http://localhost:8181/search'
             let searchReturn = await axios.post(API, searchQuery)
             searchReturn = searchReturn.data.tracks.items;
+            console.log(searchReturn);
             for (let i = 0; i < 20; i++){
                 let track = [];
 
@@ -89,6 +90,8 @@ export default function Form() {
                 }
                 track.push(artistarray);
                 track.push(searchReturn[i].external_urls.spotify);
+
+                track.push(searchReturn[i].preview_url)
 
                 trackList.push(track);
             }

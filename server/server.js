@@ -70,7 +70,7 @@ app.post(`/search`, async (request, response) =>{
 });
 
 app.get('/login', function(request, response){
-  
+  const returnLink = `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=http://localhost:8181&response_type="token"`
 });
 
 //MongoDB requests
