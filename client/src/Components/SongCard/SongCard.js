@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SongCard.css";
-// import Form from "../Form/Form";
 
-export default function SongCard({ artist, handleDelete }) {
-  return <div></div>;
+export default function SongCard({ songObject, title, artist }) {
+  return (
+    <div className="song-card-div">
+      <h2>{title}</h2>
+      <p>{artist}</p>
+      <button className="play-button">Preview</button>
+    </div>
+  );
 }

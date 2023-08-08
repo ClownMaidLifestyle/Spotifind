@@ -1,0 +1,29 @@
+h2 {
+  text-align: center;
+  padding: 2rem 0 0.5rem 0;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  background-color: var(--blk);
+  color: var(--wht);
+  border-radius: 15px;
+}
+
+p {
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--blk);
+  color: beige;
+  line-height: 1.6;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.play-button {
+  width: auto;
+  border: none;
+  background-color: green;
+}
