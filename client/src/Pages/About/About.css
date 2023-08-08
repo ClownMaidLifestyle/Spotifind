@@ -20,12 +20,30 @@ ul {
   list-style: none;
 }
 .about {
-  display: flex;
   justify-content: space-between;
     text-align: center;
+    display: block;
 }
 p {
+  display: flex;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  word-spacing: 1.5px;
   width: 250px;
+  line-height: 35px;
 
+}
+.description{
+  display: flex;
+  flex-direction: column;
+    text-align: center;
+  align-items: center;
+  
+
+}
+.description :hover{
+  color:rgb(95, 164, 145);
+  transition: all linear 0.5s;
+  cursor: pointer;
 }

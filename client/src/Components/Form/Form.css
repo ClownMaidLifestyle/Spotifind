@@ -9,9 +9,7 @@ sub-form {
   align-items: center;
   height: 200px;
   width: 100%;
-  color: red;
   display: flex;
-  transform: translate(-50%);
 }
 .form {
   margin: 0;
@@ -46,13 +44,13 @@ main {
   border-radius: 10px;
   padding: 15px;
   width: 100px;
-  height: 50px;
-  font-size: 18px;
+  height: 45px;
+  font-size: 15px;
   letter-spacing: 1.5px;
 
 }
 .sub-btn:hover {
   background-color: rgb(95, 164, 145);
   color:black;
-  transition: all 0.3s linear;}
+  transition: all 0.1s linear;}
 
