@@ -1,6 +1,8 @@
+
 import React from 'react'
 import axios from "axios"
 import {useState, useEffect} from "react"
+import SongCard from "../SongCard/SongCard";
 import Select from "react-select"
 import './Form.css';
 
@@ -8,6 +10,12 @@ import {genres} from "./genres"
 
 
 export default function Form() {
+  const [searchQuery, setSearchQuery] = useState({
+    key: "",
+    trackQuery: "",
+  });
+  const [returnedTracks, setReturnedTracks] = useState([]);
+
 
     useEffect(() =>{
         getAuth();
@@ -33,11 +41,14 @@ export default function Form() {
         genres: []
     })
 
-    async function getAuth(){
-        const API = "http://localhost:8181/auth"
-        const res = await axios.get(API);
-        searchQuery.key = res.data.access_token;
-    }
+
+  function handleSearch(event) {
+    setSearchQuery((prevQuery) => ({
+      ...prevQuery,
+      trackQuery: event.target.value,
+    }));
+  }
+
 
     async function spotifyLogin(){
         const API = "http://localhost:8181/login"
@@ -114,17 +125,27 @@ export default function Form() {
     }
 
 
-    return (
-
-    <div className='form'>
-            
-        <form className='sub-form' onSubmitCapture={(event) => doSearch(event)}>
-            <input className='input' placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
-            <button className='sub.btn' type="submit">Submit</button>
-            <Select options={allGenres} isMulti onChange={handleGenre} autoFocus={true}/>
-
-        </form>
+  return (
+    <div className="form-div">
+      {returnedTracks.map((song, key) => (
+        <div className="grid-item" key={song.id}>
+          <SongCard
+            songObject={song}
+            title={song.name}
+            artist={song.artists.name}
+          />
+        </div>
+      ))}
+      <form onSubmitCapture={(event) => doSearch(event)}>
+        <input
+          placeholder="Track name"
+          onChangeCapture={(event) => handleSearch(event)}
+        ></input>
+        <Select options={allGenres} isMulti onChange={handleGenre} autoFocus={true}/>
+        <button type="submit">Submit</button>
+        {/* <Select options={}/> */}
+      </form>
 
     </div>
-    )
+  );
 }
