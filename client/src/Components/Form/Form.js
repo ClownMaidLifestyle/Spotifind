@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from "axios"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import Select from "react-select"
 import './Form.css';
 
@@ -8,6 +8,12 @@ import {genres} from "./genres"
 
 
 export default function Form() {
+
+    useEffect(() =>{
+        getAuth();
+    });
+
+
     const allGenres = []
         for(let i = 0; i<genres.length+1; i++){
             const genreObj = {
@@ -105,7 +111,6 @@ export default function Form() {
 
     return (
     <div>
-        <button onClick={()=>getAuth()}>Magic Access Key Spawner</button>
         <form onSubmitCapture={(event) => doSearch(event)}>
             <input placeholder='Track name' onChangeCapture={(event) => handleSearch(event)}></input>
             <button type="submit">Submit</button>
