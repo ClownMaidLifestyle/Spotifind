@@ -48,29 +48,71 @@ export default function Form() {
   function handleSearch(event) {
     console.log(event);
     setSearchQuery({
-      ...searchQuery,
-      query: event.target.value,
-    });
-  }
+        ...searchQuery,
+        query: event.target.value
+        })
+    }
 
-  const handleGenre = (selectedOption) => {
-    searchQuery.genres.push(selectedOption[0].value);
-    console.log(searchQuery.genres);
-  };
+    const handleGenre = (selectedOption) => {
+            let i = selectedOption.length;
+            console.log(i);
+            searchQuery.genres.push(selectedOption[i].value)
+        console.log(searchQuery.genres);
+    }
 
-  async function doSearch(event) {
-    let genreCheck = 0;
-    let searchValid = false;
-    event.preventDefault();
+    async function doSearch(event){
+        let genreCheck = 0;
+        let searchValid = false;
+        event.preventDefault()
 
-    console.log(searchQuery.genres);
-    if (searchQuery.genres) {
-      for (let i = 0; i < searchQuery.genres.length; i++) {
-        for (let y = 0; y < genres.length; y++) {
-          if (genres[y].toLowerCase() == searchQuery.genres[i].toLowerCase()) {
-            console.log(genres[y]);
-            genreCheck++;
-          }
+        console.log(searchQuery.genres);
+        if (searchQuery.genres){
+            for (let i = 0; i < searchQuery.genres.length; i++){
+                for (let y = 0; y < genres.length; y++){
+                    if (genres[y].toLowerCase()==searchQuery.genres[i].toLowerCase()){
+                        console.log(genres[y]);
+                        genreCheck++;
+                    }
+                }
+            }
+            if (genreCheck == searchQuery.genres.length){
+                searchValid=true;
+            }
+        }
+        else{
+            searchValid=true;
+        }
+        console.log(searchValid);
+        if (searchValid){
+            console.log("searching..." +searchQuery.genres);
+            const API = 'http://localhost:8181/search'
+            let searchReturn = await axios.post(API, searchQuery)
+            searchReturn = searchReturn.data.tracks.items;
+            console.log("returns:"+searchReturn);
+            for (let i = 0; i < 20; i++){
+                let track = [];
+
+                track.push(searchReturn[i].name);
+                track.push(searchReturn[i].album.name);
+                track.push(searchReturn[i].album.images[0]);
+
+                let artists = searchReturn[i].artists;
+                let artistarray = [];
+            
+                for(let y = 0; y < artists.length; y++){
+                    artistarray.push(artists[y].name);
+                }
+                track.push(artistarray);
+                track.push(searchReturn[i].external_urls.spotify);
+
+                track.push(searchReturn[i].preview_url)
+
+                trackList.push(track);
+            }
+        }
+        else{
+            console.log("Search failed");
+
         }
       }
       if (genreCheck == searchQuery.genres.length) {
