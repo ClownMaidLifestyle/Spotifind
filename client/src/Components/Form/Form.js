@@ -41,6 +41,12 @@ export default function Form() {
     }));
   }
 
+  async function getAuth(){
+    const API = "http://localhost:8181/auth"
+    const res = await axios.get(API);
+    searchQuery.key = res.data.access_token;
+}
+
   async function spotifyLogin() {
     const API = "http://localhost:8181/login";
   }
@@ -54,8 +60,8 @@ export default function Form() {
     }
 
     const handleGenre = (selectedOption) => {
-            let i = selectedOption.length;
-            console.log(i);
+            let i = selectedOption.length - 1;
+            console.log(selectedOption);
             searchQuery.genres.push(selectedOption[i].value)
         console.log(searchQuery.genres);
     }
@@ -114,45 +120,7 @@ export default function Form() {
             console.log("Search failed");
 
         }
-      }
-      if (genreCheck == searchQuery.genres.length) {
-        searchValid = true;
-      }
-    } else {
-      searchValid = true;
     }
-    console.log(searchValid);
-    if (searchValid) {
-      console.log("searching..." + searchQuery.genres);
-      const API = "http://localhost:8181/search";
-      let searchReturn = await axios.post(API, searchQuery);
-      searchReturn = searchReturn.data.tracks.items;
-      console.log("returns:" + searchReturn);
-      for (let i = 0; i < 20; i++) {
-        let track = [];
-
-        track.push(searchReturn[i].name);
-        track.push(searchReturn[i].album.name);
-        track.push(searchReturn[i].album.images[0]);
-
-        let artists = searchReturn[i].artists;
-        let artistarray = [];
-
-        for (let y = 0; y < artists.length; y++) {
-          artistarray.push(artists[y].name);
-        }
-        track.push(artistarray);
-        track.push(searchReturn[i].external_urls.spotify);
-
-        track.push(searchReturn[i].preview_url);
-
-        trackList.push(track);
-      }
-    } else {
-      console.log("Search failed");
-    }
-    console.log(trackList);
-  }
 
   return (
     <div className="form-div">
