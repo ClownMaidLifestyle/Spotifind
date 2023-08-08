@@ -44,10 +44,10 @@ app.post(`/search`, async (request, response) =>{
 
   console.log("building query...");
   let currentQuery = request.body.query;
-
+  console.log(request.body);
   if (request.body.genres){
     for (let i = 0; i < request.body.genres.length; i++)
-    currentQuery = currentQuery +"+genre:" + request.body.genres[i];
+    currentQuery = currentQuery +"+genre:" + request.body.genres;
   }
 
   if (request.body.startYear && request.body.endYear){

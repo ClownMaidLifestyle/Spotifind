@@ -53,17 +53,16 @@ export default function Form() {
     }
 
     const handleGenre = (selectedOption) => {
-        selectedOption = selectedOption[0].value;
-        setSearchQuery({
-            ...searchQuery,
-            genres: [selectedOption]
-            })
+        searchQuery.genres.push(selectedOption[0].value)
+        console.log(searchQuery.genres)
     }
 
     async function doSearch(event){
         let genreCheck = 0;
         let searchValid = false;
         event.preventDefault()
+
+        console.log(searchQuery.genres);
         if (searchQuery.genres){
             for (let i = 0; i < searchQuery.genres.length; i++){
                 for (let y = 0; y < genres.length; y++){
@@ -75,9 +74,6 @@ export default function Form() {
             }
             if (genreCheck == searchQuery.genres.length){
                 searchValid=true;
-                searchQuery.genres.map((genre) =>{
-                    genre = genre.charAt(0).toUpperCase() + genre.slice(1);
-                });
             }
         }
         else{
@@ -85,11 +81,11 @@ export default function Form() {
         }
         console.log(searchValid);
         if (searchValid){
-            console.log("searching...");
+            console.log("searching..." +searchQuery.genres);
             const API = 'http://localhost:8181/search'
             let searchReturn = await axios.post(API, searchQuery)
             searchReturn = searchReturn.data.tracks.items;
-            console.log(searchReturn);
+            console.log("returns:"+searchReturn);
             for (let i = 0; i < 20; i++){
                 let track = [];
 
