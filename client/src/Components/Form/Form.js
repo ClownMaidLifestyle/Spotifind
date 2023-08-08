@@ -61,8 +61,6 @@ export default function Form() {
         else{
             searchQuery.genres.pop();
         }
-
-        console.log(searchQuery.genres);
     }
 
     async function doSearch(event){
