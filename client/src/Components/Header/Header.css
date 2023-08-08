@@ -36,6 +36,8 @@ ul li {
   padding: 20px;
   color: rgb(211, 219, 227);
   border-radius: 10px;
+    box-shadow: 0 9px 8px rgba(0, 0, 0, 0.1);
+
   letter-spacing: 2px;
 }
 li a:hover {

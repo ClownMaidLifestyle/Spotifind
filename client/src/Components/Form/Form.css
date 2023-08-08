@@ -1,4 +1,4 @@
-body{
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -7,34 +7,52 @@ sub-form {
   text-align: center;
   justify-content: center;
   align-items: center;
-  height: 400px;
+  height: 200px;
+  width: 100%;
   color: red;
   display: flex;
   transform: translate(-50%);
 }
 .form {
+  margin: 0;
+  padding: 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 200px;
 }
-magic.btn {
-  display: none;
+.magic-btn {
+  visibility: hidden;
 }
 .input {
   display: block;
   height: 50px;
-  width: 200px;
+  width: 70vw;
   border-radius: 10px;
-  
+  margin: 20px;
+    box-shadow: 0 9px 8px rgba(0, 0, 0, 0.1);
+
 }
 main {
-  height: 400px;
   justify-content: center;
-  min-width:320px;
+  min-width: 320px;
 }
-sub-btn {
-  display: block;
-    box-shadow: 0 9px 8px rgba(0,0,0,0.1);
-justify-content: center;
+.sub-btn {
+  box-shadow: 0 9px 8px rgba(0, 0, 0, 0.1);
+  justify-content: center;
   align-items: center;
   text-align: center;
   border-radius: 10px;
+  padding: 15px;
+  width: 100px;
+  height: 50px;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+
 }
+.sub-btn:hover {
+  background-color: rgb(95, 164, 145);
+  color:black;
+  transition: all 0.3s linear;}
+
