@@ -62,6 +62,7 @@ export default function Form() {
     } else {
       searchQuery.genres.pop();
     }
+  }
 
   async function doSearch(event) {
     let genreCheck = 0;
@@ -126,30 +127,19 @@ export default function Form() {
   }
 
   return (
-    <form onSubmitCapture={(event) => doSearch(event)}>
-      <input
-        placeholder="Track name"
-        onChangeCapture={(event) => handleSearch(event)}
-      ></input>
-      <Select
-        options={allGenres}
-        isMulti
-        onChange={handleGenre}
-        autoFocus={true}
-      />
-      <button type="submit">Submit</button>
-      {/* <Select options={}/> */}
-   
-        <div className="grid-container">
+    <div>
+      <div className="grid-container">
       {returnedTracks.map((song, key) => (
         <div className="grid-item" key={key}>
           <SongCard
             songObject={song}
             title={song[0]} // Access the title from the track list
             artist={song[3].join(", ")} // Access the artists array and join them
+            prevLink={song[5]}
           />
         </div>
       ))}
+      </div>
       <form onSubmitCapture={(event) => doSearch(event)}>
         <input
           placeholder="Track name"
