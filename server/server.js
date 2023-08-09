@@ -96,25 +96,12 @@ app.get('/userAuth', function(request, response){
     return text;
   }
 
-  let codeVerifier = generateRandomString(256)
-  console.log("code verifier generated")
-
-  async function generateCodeChallenge(codeVerifier){
-    const digest = crypto.createHash("sha256").update(codeVerifier).digest("base64");
-  
-    return digest;
-  }
-   
-  let codeChallenge = generateCodeChallenge(codeVerifier);
-  console.log("code Challenge generated");
   const searchParams = {
     response_type: 'code',
     client_id: clientId,
     scope: 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public',
     redirect_uri: redirectURI,
     state: generateRandomString(16),
-    code_challenge_method: `S256`,
-    code_challenge: codeChallenge
   }
   console.log(searchParams)
   response.status(200).json(searchParams)
