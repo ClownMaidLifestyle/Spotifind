@@ -127,7 +127,7 @@ export default function Form() {
   }
 
   return (
-    <div>
+    <div className="main">
       <div className="grid-container">
       {returnedTracks.map((song, key) => (
         <div className="grid-item" key={key}>
@@ -140,18 +140,21 @@ export default function Form() {
         </div>
       ))}
       </div>
-      <form onSubmitCapture={(event) => doSearch(event)}>
+      <form className="form" onSubmitCapture={(event) => doSearch(event)}>
         <input
+          className="input"
           placeholder="Track name"
           onChangeCapture={(event) => handleSearch(event)}
         ></input>
         <Select
+          className="select"
+          placeholder="Genres (type to search)"
           options={allGenres}
           isMulti
           onChange={handleGenre}
           autoFocus={true}
         />
-        <button type="submit">Submit</button>
+        <button className="sub-btn" type="submit">Submit</button>
         {/* <Select options={}/> */}
       </form>
     </div>
