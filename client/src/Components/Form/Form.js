@@ -47,94 +47,90 @@ export default function Form() {
   function handleSearch(event) {
     console.log(event);
     setSearchQuery({
-        ...searchQuery,
-        query: event.target.value
-        })
+      ...searchQuery,
+      query: event.target.value,
+    });
+  }
+
+  const handleGenre = (selectedOption) => {
+    if (selectedOption != false) {
+      let i = selectedOption.length - 1;
+      console.log(selectedOption);
+      searchQuery.genres.push(selectedOption[i].value);
+    } else {
+      searchQuery.genres.pop();
     }
+  };
 
-    const handleGenre = (selectedOption) => {
-        if (selectedOption != false){
-            let i = selectedOption.length - 1;
-            console.log(selectedOption);
-            searchQuery.genres.push(selectedOption[i].value)
+  async function doSearch(event) {
+    let genreCheck = 0;
+    let searchValid = false;
+    event.preventDefault();
+
+    console.log(searchQuery.genres);
+    if (searchQuery.genres) {
+      for (let i = 0; i < searchQuery.genres.length; i++) {
+        for (let y = 0; y < genres.length; y++) {
+          if (genres[y].toLowerCase() == searchQuery.genres[i].toLowerCase()) {
+            genres[y].replace(" ", "_");
+            genreCheck++;
+          }
         }
-        else{
-            searchQuery.genres.pop();
-        }
+      }
+      if (genreCheck == searchQuery.genres.length) {
+        searchValid = true;
+      }
+    } else {
+      searchValid = true;
     }
+    console.log(searchValid);
+    if (searchValid) {
+      console.log("searching... " + searchQuery);
+      const API = "http://localhost:8181/search";
+      let searchReturn = await axios.post(API, searchQuery);
+      console.log(searchReturn);
+      let resultsNumber = searchReturn.data.tracks.items.length;
+      console.log(resultsNumber);
+      searchReturn = searchReturn.data.tracks.items;
+      console.log("returns:" + searchReturn);
+      for (let i = 0; i < resultsNumber; i++) {
+        let track = [];
+        track.push(searchReturn[i].name);
 
-    async function doSearch(event){
-        let genreCheck = 0;
-        let searchValid = false;
-        event.preventDefault()
+        track.push(searchReturn[i].album.name);
+        track.push(searchReturn[i].album.images[0]);
 
-        console.log(searchQuery.genres);
-        if (searchQuery.genres){
-            for (let i = 0; i < searchQuery.genres.length; i++){
-                for (let y = 0; y < genres.length; y++){
-                    if (genres[y].toLowerCase()==searchQuery.genres[i].toLowerCase()){
-                        genres[y].replace(" ", "_")
-                        genreCheck++;
-                    }
-                }
-            }
-            if (genreCheck == searchQuery.genres.length){
-                searchValid=true;
-            }
+        let artists = searchReturn[i].artists;
+        let artistarray = [];
+
+        for (let y = 0; y < artists.length; y++) {
+          artistarray.push(artists[y].name);
         }
-        else{
-            searchValid=true;
-        }
-        console.log(searchValid);
-        if (searchValid){
-            console.log("searching... "+searchQuery);
-            const API = 'http://localhost:8181/search'
-            let searchReturn = await axios.post(API, searchQuery)
-            console.log(searchReturn);
-            let resultsNumber = searchReturn.data.tracks.items.length;
-            console.log(resultsNumber);
-            searchReturn = searchReturn.data.tracks.items;
-            console.log("returns:"+searchReturn);
-            for (let i = 0; i < resultsNumber; i++){
-                let track = [];;
-                    track.push(searchReturn[i].name);
+        track.push(artistarray);
+        track.push(searchReturn[i].external_urls.spotify);
 
-                
-                track.push(searchReturn[i].album.name);
-                track.push(searchReturn[i].album.images[0]);
+        track.push(searchReturn[i].preview_url);
 
-                let artists = searchReturn[i].artists;
-                let artistarray = [];
-            
-                for(let y = 0; y < artists.length; y++){
-                    artistarray.push(artists[y].name);
-                }
-                track.push(artistarray);
-                track.push(searchReturn[i].external_urls.spotify);
-
-                track.push(searchReturn[i].preview_url)
-
-                trackList.push(track);
-            }
-        }
-        else{
-            console.log("Search failed");
-        }
-        if (!trackList){
-            trackList = "null";
-        }
-        console.log(trackList);
+        trackList.push(track);
+      }
+    } else {
+      console.log("Search failed");
     }
-
+    if (!trackList) {
+      trackList = "null";
+    }
+    setReturnedTracks(trackList);
+    console.log(trackList);
+  }
 
   return (
     <div className="grid-container">
       {returnedTracks.map((song, key) => (
-        <div className="grid-item" key={song.id}>
+        <div className="grid-item" key={key}>
           <SongCard
             songObject={song}
-            title={song.name}
-            artist={song.artists.name}
+            title={song[0]} // Access the title from the track list
+            artist={song[3].join(", ")} // Access the artists array and join them
           />
         </div>
       ))}
@@ -142,8 +138,7 @@ export default function Form() {
         <input
           placeholder="Track name"
           onChangeCapture={(event) => handleSearch(event)}
-        >
-        </input>
+        ></input>
         <Select
           options={allGenres}
           isMulti
