@@ -10,6 +10,8 @@ import { genres } from "./genres";
 export default function Form() {
   const [returnedTracks, setReturnedTracks] = useState([]);
 
+  
+
   async function getAuth() {
     const API = "http://localhost:8181/auth";
     const res = await axios.get(API);
@@ -60,7 +62,6 @@ export default function Form() {
     } else {
       searchQuery.genres.pop();
     }
-  };
 
   async function doSearch(event) {
     let genreCheck = 0;
@@ -83,6 +84,7 @@ export default function Form() {
     } else {
       searchValid = true;
     }
+
     console.log(searchValid);
     if (searchValid) {
       console.log("searching... " + searchQuery);
@@ -124,7 +126,21 @@ export default function Form() {
   }
 
   return (
-    <div className="grid-container">
+    <form onSubmitCapture={(event) => doSearch(event)}>
+      <input
+        placeholder="Track name"
+        onChangeCapture={(event) => handleSearch(event)}
+      ></input>
+      <Select
+        options={allGenres}
+        isMulti
+        onChange={handleGenre}
+        autoFocus={true}
+      />
+      <button type="submit">Submit</button>
+      {/* <Select options={}/> */}
+   
+        <div className="grid-container">
       {returnedTracks.map((song, key) => (
         <div className="grid-item" key={key}>
           <SongCard

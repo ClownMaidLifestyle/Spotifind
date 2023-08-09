@@ -32,6 +32,7 @@ p {
   word-spacing: 1.5px;
   width: 250px;
   line-height: 35px;
+  letter-spacing: 1px;
 
 }
 .description{
@@ -49,4 +50,7 @@ p {
 }
 a{
   color: white;
+}
+span{
+  font-size: large;
 }
