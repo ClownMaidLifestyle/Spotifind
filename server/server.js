@@ -5,6 +5,8 @@ const bp = require("body-parser");
 const axios = require("axios");
 const e = require("express");
 const crypto = require("crypto")
+const queryString = require("querystring");
+
 
 require("dotenv").config();
 
@@ -107,16 +109,40 @@ app.get('/userAuth', function(request, response){
   response.status(200).json(searchParams)
 });
 
-  app.get(`/userAuthStage2`, function (request, response){
+  app.post(`/userAuthStage2`, async function (req, res){
 
-    let body = "grant_type=authorization_code"+"&code="
-    fetch('https://accounts.spotify.com/api/token', {
+    let client_id = clientId;
+    let client_secret = clientSecret;
+    console.log(req.body.code);
+    let code =  req.body.code
+    const authParams = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-url'
+        'Authorization': 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: body
-    })
+      body: queryString.stringify({
+        code: code,
+        redirect_uri: redirectURI,
+        grant_type:"authorization_code"
+      })
+    }
+
+    try {
+      const response = await fetch('https://accounts.spotify.com/api/token', authParams);
+      const data = await response.json();
+    
+      if (response.ok) {
+        res.json(data);
+      } else {
+        console.error('Error exchanging code for access token:', data);
+        res.status(response.status).json({ error: 'token_exchange_error' });
+      }
+    } catch (error) {
+      console.error('Error exchanging code for access token:', error);
+      res.status(500).json({ error: 'server_error' });
+    }
+    
   });
 
 
