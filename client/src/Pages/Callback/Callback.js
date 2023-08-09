@@ -10,12 +10,12 @@ export default function Callback() {
     let code = urlParams.get('code');
     localStorage.setItem('userAuthCode', code);
     
-    stage2();
+    //stage2();
 
     })
 
     async function stage2(code){
-        const res = await axios.get("http://localhost:8181/userAuthStag2")
+        //const res = await axios.get("http://localhost:8181/userAuthStag2")
     }
   return (
 <>

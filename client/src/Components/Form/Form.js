@@ -64,29 +64,6 @@ export default function Form() {
     }
   }
 
-  async function doSearch(event) {
-    let genreCheck = 0;
-    let searchValid = false;
-    event.preventDefault();
-
-    console.log(searchQuery.genres);
-    if (searchQuery.genres) {
-      for (let i = 0; i < searchQuery.genres.length; i++) {
-        for (let y = 0; y < genres.length; y++) {
-          if (genres[y].toLowerCase() == searchQuery.genres[i].toLowerCase()) {
-            genres[y].replace(" ", "_");
-            genreCheck++;
-          }
-        }
-      }
-      if (genreCheck == searchQuery.genres.length) {
-        searchValid = true;
-      }
-    } else {
-      searchValid = true;
-    }
-
-
     async function doSearch(event){
         let genreCheck = 0;
         let searchValid = false;
@@ -140,8 +117,8 @@ export default function Form() {
 
                 trackList.push(track);
             }
-
- 
+          }
+        }
 async function getUserAuth(){
   const API = "http://localhost:8181/userAuth"
   let res = await axios.get(API);
