@@ -9,6 +9,7 @@ const crypto = require("crypto")
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8181;
+const redirectURI = "http://localhost:3000/callback";
 
 const app = express();
 app.use(cors());
@@ -68,6 +69,7 @@ app.post(`/search`, async (request, response) => {
       (request.body.startYear || request.body.endYear);
   }
 
+
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {
@@ -102,6 +104,21 @@ app.get('/userAuth', function(request, response){
   
     return digest;
   }
+   
+  let codeChallenge = generateCodeChallenge(codeVerifier);
+  console.log("code Challenge generated");
+  const searchParams = {
+    response_type: 'code',
+    client_id: clientId,
+    scope: 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public',
+    redirect_uri: redirectURI,
+    state: generateRandomString(16),
+    code_challenge_method: `S256`,
+    code_challenge: codeChallenge
+  }
+  console.log(searchParams)
+  response.status(200).json(searchParams)
+});
 
   app.get(`/userAuthStage2`, function (request, response){
 
@@ -116,19 +133,6 @@ app.get('/userAuth', function(request, response){
   });
 
 
-  let codeChallenge = generateCodeChallenge(codeVerifier);
-  console.log("code Challenge generated");
-  const searchParams = {
-    response_type: 'code',
-    client_id: clientId,
-    scope: 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public',
-    redirect_uri: redirectURI,
-    state: generateRandomString(16),
-    code_challenge_method: `S256`,
-    code_challenge: codeChallenge
-  }
-  console.log(searchParams)
-  response.status(200).json(searchParams)
 
 app.get("/login", function (request, response) {
   const API = `https://accounts.spotify.com/authorize`;
@@ -140,15 +144,6 @@ app.get("/login", function (request, response) {
     "playlist-modify-public",
   ];
 });
-
-const API = `https://accounts.spotify.com/authorize`
-const redirectURI =  "http://localhost:3000/callback"
-const scopes = [
-  "playlist-read-private",
-  "playlist-read-collaborative",
-  "playlist-modify-private",
-  "playlist-modify-public"
-]
 
 //MongoDB requests
 
