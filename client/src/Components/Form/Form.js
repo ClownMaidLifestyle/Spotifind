@@ -86,45 +86,74 @@ export default function Form() {
       searchValid = true;
     }
 
-    console.log(searchValid);
-    if (searchValid) {
-      console.log("searching... " + searchQuery);
-      const API = "http://localhost:8181/search";
-      let searchReturn = await axios.post(API, searchQuery);
-      console.log(searchReturn);
-      let resultsNumber = searchReturn.data.tracks.items.length;
-      console.log(resultsNumber);
-      searchReturn = searchReturn.data.tracks.items;
-      console.log("returns:" + searchReturn);
-      for (let i = 0; i < resultsNumber; i++) {
-        let track = [];
-        track.push(searchReturn[i].name);
 
-        track.push(searchReturn[i].album.name);
-        track.push(searchReturn[i].album.images[0]);
+    async function doSearch(event){
+        let genreCheck = 0;
+        let searchValid = false;
+        event.preventDefault()
 
-        let artists = searchReturn[i].artists;
-        let artistarray = [];
-
-        for (let y = 0; y < artists.length; y++) {
-          artistarray.push(artists[y].name);
+        console.log(searchQuery.genres);
+        if (searchQuery.genres){
+            for (let i = 0; i < searchQuery.genres.length; i++){
+                for (let y = 0; y < genres.length; y++){
+                    if (genres[y].toLowerCase()==searchQuery.genres[i].toLowerCase()){
+                        genres[y].replace(" ", "_")
+                        genreCheck++;
+                    }
+                }
+            }
+            if (genreCheck == searchQuery.genres.length){
+                searchValid=true;
+            }
         }
-        track.push(artistarray);
-        track.push(searchReturn[i].external_urls.spotify);
+        else{
+            searchValid=true;
+        }
+        console.log(searchValid);
+        if (searchValid){
+            console.log("searching... "+searchQuery);
+            const API = 'http://localhost:8181/search'
+            let searchReturn = await axios.post(API, searchQuery)
+            console.log(searchReturn);
+            let resultsNumber = searchReturn.data.tracks.items.length;
+            console.log(resultsNumber);
+            searchReturn = searchReturn.data.tracks.items;
+            console.log("returns:"+searchReturn);
+            for (let i = 0; i < resultsNumber; i++){
+                let track = [];
+                    track.push(searchReturn[i].name);
 
-        track.push(searchReturn[i].preview_url);
+                
+                track.push(searchReturn[i].album.name);
+                track.push(searchReturn[i].album.images[0]);
 
-        trackList.push(track);
-      }
-    } else {
-      console.log("Search failed");
-    }
-    if (!trackList) {
-      trackList = "null";
-    }
-    setReturnedTracks(trackList);
-    console.log(trackList);
-  }
+                let artists = searchReturn[i].artists;
+                let artistarray = [];
+            
+                for(let y = 0; y < artists.length; y++){
+                    artistarray.push(artists[y].name);
+                }
+                track.push(artistarray);
+                track.push(searchReturn[i].external_urls.spotify);
+
+                track.push(searchReturn[i].preview_url)
+
+                trackList.push(track);
+            }
+
+ 
+async function getUserAuth(){
+  const API = "http://localhost:8181/userAuth"
+  let res = await axios.get(API);
+  console.log(res)
+  console.log(res.data.client_id)
+  let data = "client_id="+res.data.client_id+"&response_type="+res.data.response_type+
+      "&scope="+res.data.scope+"&redirect_uri="+res.data.redirect_uri+"&code_challenge_method="+res.data.code_challenge_method+
+      "&code_challenge="+res.data.code_challenge
+
+  window.location ="https://accounts.spotify.com/authorize?"+data;
+}
+
 
   return (
     <div className="main">
@@ -157,6 +186,7 @@ export default function Form() {
         <button className="sub-btn" type="submit">Submit</button>
         {/* <Select options={}/> */}
       </form>
+      <button onClick={() => getUserAuth()}>The magic User Auth button</button>
     </div>
   );
 }

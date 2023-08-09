@@ -5,6 +5,7 @@ import About from "./Pages/About/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
+import Callback from "./Pages/Callback/Callback"
 
 // import LoginButton from "./Login";
 // import LogoutButton from "./Logout";
@@ -22,6 +23,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/callback" element={<Callback/>} />
           </Routes>
           <Footer />
         </div>
