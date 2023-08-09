@@ -105,7 +105,6 @@ app.get('/userAuth', function(request, response){
     redirect_uri: redirectURI,
     state: generateRandomString(16),
   }
-  console.log(searchParams)
   response.status(200).json(searchParams)
 });
 
@@ -113,7 +112,6 @@ app.get('/userAuth', function(request, response){
 
     let client_id = clientId;
     let client_secret = clientSecret;
-    console.log(req.body.code);
     let code =  req.body.code
     const authParams = {
       method: 'POST',
@@ -136,7 +134,6 @@ app.get('/userAuth', function(request, response){
         res.json(data);
       } else {
         console.error('Error exchanging code for access token:', data);
-        res.status(response.status).json({ error: 'token_exchange_error' });
       }
     } catch (error) {
       console.error('Error exchanging code for access token:', error);
@@ -145,17 +142,32 @@ app.get('/userAuth', function(request, response){
     
   });
 
+app.post("/profile", async function (req, res) {
+  access_Key = "Bearer " + req.body[0]
+  console.log("key " + access_Key)
+  authParams ={
+    headers:{
+      'Authorization' : access_Key
+    }
+  }
+
+  const API = 'https://api.spotify.com/v1/me';
 
 
-app.get("/login", function (request, response) {
-  const API = `https://accounts.spotify.com/authorize`;
-  const redirectURI = "https://localhost:8181/";
-  const scopes = [
-    "playlist-read-private",
-    "playlist-read-collaborative",
-    "playlist-modify-private",
-    "playlist-modify-public",
-  ];
+  try {
+    const response = await axios.get(API, authParams);
+    const data = await response.data;
+  
+      console.log(data);
+      res.status(200).json(data)
+
+    }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'server_error' });
+  }
+  
+
 });
 
 //MongoDB requests

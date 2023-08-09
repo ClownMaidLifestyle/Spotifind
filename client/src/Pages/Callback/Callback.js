@@ -24,8 +24,15 @@ export default function Callback() {
         localStore_User_Access_key.push(res.data.access_token, res.data.expires_in, res.data.refresh_token, res.data.scope, res.data.token_type);
         console.log(localStore_User_Access_key);
         localStorage.setItem("user_access_key", localStore_User_Access_key)
+        stage3(localStore_User_Access_key)
+    }
 
+    async function stage3(localStore_User_Access_key){
+        const res = await axios.post("http://localhost:8181/profile", localStore_User_Access_key);
+        const profileData = res.data;
+        console.log(profileData)
         
+
     }
   return (
 <>
