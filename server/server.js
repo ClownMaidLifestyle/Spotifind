@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
 const e = require("express");
+const crypto = require("crypto")
 
 require("dotenv").config();
 
@@ -71,16 +72,63 @@ app.post(`/search`, async (request, response) =>{
   .then(data => response.status(200).json(data))
 });
 
-app.get('/login', function(request, response){
-  const API = `https://accounts.spotify.com/authorize`
-  const redirectURI =  "https://localhost:8181/"
-  const scopes = [
-    "playlist-read-private",
-    "playlist-read-collaborative",
-    "playlist-modify-private",
-    "playlist-modify-public"
-  ]
+app.get('/userAuth', function(request, response){
+
+  function generateRandomString(length) {
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+    for (let i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
+
+  let codeVerifier = generateRandomString(256)
+  console.log("code verifier generated")
+
+  async function generateCodeChallenge(codeVerifier){
+    const digest = crypto.createHash("sha256").update(codeVerifier).digest("base64");
+  
+    return digest;
+  }
+
+  app.get(`/userAuthStage2`, function (request, response){
+
+    let body = "grant_type=authorization_code"+"&code="
+    fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-url'
+      },
+      body: body
+    })
+  });
+
+
+  let codeChallenge = generateCodeChallenge(codeVerifier);
+  console.log("code Challenge generated");
+  const searchParams = {
+    response_type: 'code',
+    client_id: clientId,
+    scope: 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public',
+    redirect_uri: redirectURI,
+    state: generateRandomString(16),
+    code_challenge_method: `S256`,
+    code_challenge: codeChallenge
+  }
+  console.log(searchParams)
+  response.status(200).json(searchParams)
 });
+
+const API = `https://accounts.spotify.com/authorize`
+const redirectURI =  "http://localhost:3000/callback"
+const scopes = [
+  "playlist-read-private",
+  "playlist-read-collaborative",
+  "playlist-modify-private",
+  "playlist-modify-public"
+]
 
 //MongoDB requests
 

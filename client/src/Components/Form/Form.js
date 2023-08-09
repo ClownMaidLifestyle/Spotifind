@@ -96,7 +96,7 @@ export default function Form() {
             searchReturn = searchReturn.data.tracks.items;
             console.log("returns:"+searchReturn);
             for (let i = 0; i < resultsNumber; i++){
-                let track = [];;
+                let track = [];
                     track.push(searchReturn[i].name);
 
                 
@@ -126,6 +126,18 @@ export default function Form() {
         console.log(trackList);
     }
 
+async function getUserAuth(){
+  const API = "http://localhost:8181/userAuth"
+  let res = await axios.get(API);
+  console.log(res)
+  console.log(res.data.client_id)
+  let data = "client_id="+res.data.client_id+"&response_type="+res.data.response_type+
+      "&scope="+res.data.scope+"&redirect_uri="+res.data.redirect_uri+"&code_challenge_method="+res.data.code_challenge_method+
+      "&code_challenge="+res.data.code_challenge
+
+  window.location ="https://accounts.spotify.com/authorize?"+data;
+}
+
 
   return (
     <div className="grid-container">
@@ -153,6 +165,7 @@ export default function Form() {
         <button type="submit">Submit</button>
         {/* <Select options={}/> */}
       </form>
+      <button onClick={() => getUserAuth()}>The magic User Auth button</button>
     </div>
   );
 }
