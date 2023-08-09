@@ -10,6 +10,8 @@ import { genres } from "./genres";
 export default function Form() {
   const [returnedTracks, setReturnedTracks] = useState([]);
 
+  
+
   async function getAuth() {
     const API = "http://localhost:8181/auth";
     const res = await axios.get(API);
@@ -47,21 +49,43 @@ export default function Form() {
   function handleSearch(event) {
     console.log(event);
     setSearchQuery({
-        ...searchQuery,
-        query: event.target.value
-        })
+      ...searchQuery,
+      query: event.target.value,
+    });
+  }
+
+  const handleGenre = (selectedOption) => {
+    if (selectedOption != false) {
+      let i = selectedOption.length - 1;
+      console.log(selectedOption);
+      searchQuery.genres.push(selectedOption[i].value);
+    } else {
+      searchQuery.genres.pop();
+    }
+  }
+
+  async function doSearch(event) {
+    let genreCheck = 0;
+    let searchValid = false;
+    event.preventDefault();
+
+    console.log(searchQuery.genres);
+    if (searchQuery.genres) {
+      for (let i = 0; i < searchQuery.genres.length; i++) {
+        for (let y = 0; y < genres.length; y++) {
+          if (genres[y].toLowerCase() == searchQuery.genres[i].toLowerCase()) {
+            genres[y].replace(" ", "_");
+            genreCheck++;
+          }
+        }
+      }
+      if (genreCheck == searchQuery.genres.length) {
+        searchValid = true;
+      }
+    } else {
+      searchValid = true;
     }
 
-    const handleGenre = (selectedOption) => {
-        if (selectedOption != false){
-            let i = selectedOption.length - 1;
-            console.log(selectedOption);
-            searchQuery.genres.push(selectedOption[i].value)
-        }
-        else{
-            searchQuery.genres.pop();
-        }
-    }
 
     async function doSearch(event){
         let genreCheck = 0;
@@ -116,16 +140,8 @@ export default function Form() {
 
                 trackList.push(track);
             }
-        }
-        else{
-            console.log("Search failed");
-        }
-        if (!trackList){
-            trackList = "null";
-        }
-        console.log(trackList);
-    }
 
+ 
 async function getUserAuth(){
   const API = "http://localhost:8181/userAuth"
   let res = await axios.get(API);
@@ -140,29 +156,34 @@ async function getUserAuth(){
 
 
   return (
-    <div className="grid-container">
+    <div className="main">
+      <div className="grid-container">
       {returnedTracks.map((song, key) => (
-        <div className="grid-item" key={song.id}>
+        <div className="grid-item" key={key}>
           <SongCard
             songObject={song}
-            title={song.name}
-            artist={song.artists.name}
+            title={song[0]} // Access the title from the track list
+            artist={song[3].join(", ")} // Access the artists array and join them
+            prevLink={song[5]}
           />
         </div>
       ))}
-      <form onSubmitCapture={(event) => doSearch(event)}>
+      </div>
+      <form className="form" onSubmitCapture={(event) => doSearch(event)}>
         <input
+          className="input"
           placeholder="Track name"
           onChangeCapture={(event) => handleSearch(event)}
-        >
-        </input>
+        ></input>
         <Select
+          className="select"
+          placeholder="Genres (type to search)"
           options={allGenres}
           isMulti
           onChange={handleGenre}
           autoFocus={true}
         />
-        <button type="submit">Submit</button>
+        <button className="sub-btn" type="submit">Submit</button>
         {/* <Select options={}/> */}
       </form>
       <button onClick={() => getUserAuth()}>The magic User Auth button</button>
