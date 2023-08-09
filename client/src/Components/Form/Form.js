@@ -125,8 +125,7 @@ async function getUserAuth(){
   console.log(res)
   console.log(res.data.client_id)
   let data = "client_id="+res.data.client_id+"&response_type="+res.data.response_type+
-      "&scope="+res.data.scope+"&redirect_uri="+res.data.redirect_uri+"&code_challenge_method="+res.data.code_challenge_method+
-      "&code_challenge="+res.data.code_challenge
+      "&scope="+res.data.scope+"&redirect_uri="+res.data.redirect_uri+"&state="+res.data.state
 
   window.location ="https://accounts.spotify.com/authorize?"+data;
 }
