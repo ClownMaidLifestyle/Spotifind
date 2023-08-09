@@ -1,12 +1,5 @@
-.form-div {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 50px;
-  margin-top: 20px;
-}
-
 .grid-container {
-  padding: 2rem;
+  /* padding: 2rem; */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 50px;
@@ -14,20 +7,18 @@
 }
 
 .grid-item h2 {
-  margin: 0;
   font-size: 18px;
   font-weight: bold;
-  text-align: center;
 }
 
 .grid-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 200px;
-  width: 100%;
-  display: flex;
-  background-color: #f0f0f0;
+  width: auto;
+
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -74,7 +65,7 @@ main {
   letter-spacing: 1.5px;
 }
 
-.select{
+.select {
   margin: 15px;
   box-shadow: 0 9px 8px rgba(0, 0, 0, 0.1);
   justify-content: center;

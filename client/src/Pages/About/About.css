@@ -21,8 +21,8 @@ ul {
 }
 .about {
   justify-content: space-between;
-    text-align: center;
-    display: block;
+  text-align: center;
+  display: block;
 }
 p {
   display: flex;
@@ -30,27 +30,24 @@ p {
   align-items: center;
   justify-content: center;
   word-spacing: 1.5px;
-  width: 250px;
+
   line-height: 35px;
   letter-spacing: 1px;
-
 }
-.description{
+.description {
   display: flex;
   flex-direction: column;
-    text-align: center;
+  text-align: center;
   align-items: center;
-  
-
 }
-.description :hover{
-  color:rgb(95, 164, 145);
+.description :hover {
+  color: rgb(95, 164, 145);
   transition: all linear 0.5s;
   cursor: pointer;
 }
-a{
+a {
   color: white;
 }
-span{
+span {
   font-size: large;
 }

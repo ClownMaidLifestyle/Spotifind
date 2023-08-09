@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
 const e = require("express");
-const crypto = require("crypto")
+const crypto = require("crypto");
 
 require("dotenv").config();
 
@@ -15,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(bp.json());
 
+const Song = require("./models/song");
 mongoose.connect(process.env.DATABASE_URL);
 
 //Health Check
@@ -69,7 +70,6 @@ app.post(`/search`, async (request, response) => {
       (request.body.startYear || request.body.endYear);
   }
 
-
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {
@@ -84,55 +84,56 @@ app.post(`/search`, async (request, response) => {
     .then((data) => response.status(200).json(data));
 });
 
-app.get('/userAuth', function(request, response){
-
+app.get("/userAuth", function (request, response) {
   function generateRandomString(length) {
-    let text = '';
-    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
+    let text = "";
+    let possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     for (let i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
   }
 
-  let codeVerifier = generateRandomString(256)
-  console.log("code verifier generated")
+  let codeVerifier = generateRandomString(256);
+  console.log("code verifier generated");
 
-  async function generateCodeChallenge(codeVerifier){
-    const digest = crypto.createHash("sha256").update(codeVerifier).digest("base64");
-  
+  async function generateCodeChallenge(codeVerifier) {
+    const digest = crypto
+      .createHash("sha256")
+      .update(codeVerifier)
+      .digest("base64");
+
     return digest;
   }
-   
+
   let codeChallenge = generateCodeChallenge(codeVerifier);
   console.log("code Challenge generated");
   const searchParams = {
-    response_type: 'code',
+    response_type: "code",
     client_id: clientId,
-    scope: 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public',
+    scope:
+      "user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public",
     redirect_uri: redirectURI,
     state: generateRandomString(16),
     code_challenge_method: `S256`,
-    code_challenge: codeChallenge
-  }
-  console.log(searchParams)
-  response.status(200).json(searchParams)
+    code_challenge: codeChallenge,
+  };
+  console.log(searchParams);
+  response.status(200).json(searchParams);
 });
 
-  app.get(`/userAuthStage2`, function (request, response){
-
-    let body = "grant_type=authorization_code"+"&code="
-    fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-url'
-      },
-      body: body
-    })
+app.get(`/userAuthStage2`, function (request, response) {
+  let body = "grant_type=authorization_code" + "&code=";
+  fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-url",
+    },
+    body: body,
   });
-
-
+});
 
 app.get("/login", function (request, response) {
   const API = `https://accounts.spotify.com/authorize`;
@@ -150,8 +151,9 @@ app.get("/login", function (request, response) {
 // CREATE
 app.post("/library", async (request, response) => {
   try {
-    const newSavedSong = await SongCard.create(request.body);
+    const newSavedSong = await Song.create(request.body);
     response.status(200).json(newSavedSong);
+    console.log(newSavedSong);
   } catch (error) {
     response.status(500).json(error);
   }
