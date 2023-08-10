@@ -5,7 +5,7 @@ import axios from "axios"
 
 export default function Callback() {
 
-    developerMode = localStorage.getItem("Developer_Mode")
+    let developerMode = localStorage.getItem("Developer_Mode")
 
     let liveAPI = "https://spotifindapi.onrender.com";
     let testAPI = "http://localhost:8181" 
