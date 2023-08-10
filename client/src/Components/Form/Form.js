@@ -13,7 +13,7 @@ export default function Form() {
 
   //turn developerMode FALSE for testing and TRUE before you commit
   localStorage.setItem("Developer_Mode", false);
-  developerMode = localStorage.getItem("Developer_Mode")
+  let developerMode = localStorage.getItem("Developer_Mode")
 
   let liveAPI = "https://spotifindapi.onrender.com";
   let testAPI = "http://localhost:8181" 
