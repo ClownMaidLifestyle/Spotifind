@@ -10,14 +10,14 @@ const queryString = require("querystring");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8181;
-const redirectURI = "http://localhost:3000/callback";
+const redirectURI = "http://localhost:3000/callback" || process.env.Redirect_URI;
 
 const app = express();
 app.use(cors());
 app.use(bp.json());
 
 const Song = require("./models/song");
-//mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.DATABASE_URL);
 
 //Health Check
 app.get("/", (request, response) => {
