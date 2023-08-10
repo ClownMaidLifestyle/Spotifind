@@ -211,7 +211,7 @@ export default function Form() {
         
         {/* <Select options={}/> */}
       </form>
-      <button onClick={() => getUserAuth()}>Link Spotify Account</button>
+      <button className="linkbtn" onClick={() => getUserAuth()}>Link Spotify Account</button>
       <div className="grid-container">
         {returnedTracks.map((song, key) => (
           <div className="grid-item" key={key}>
