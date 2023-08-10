@@ -12,7 +12,7 @@ export default function Form() {
   // const [trackObject, setTrackObject] = useState({});
 
   //turn developerMode FALSE for testing and TRUE before you commit
-  localStorage.setItem("Developer_Mode", false);
+  localStorage.setItem("Developer_Mode", true);
   let developerMode = localStorage.getItem("Developer_Mode");
   // console.log(developerMode);
 

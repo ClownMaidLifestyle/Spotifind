@@ -13,10 +13,24 @@ export default function SongCard({
 }) {
   const [savedSongs, setSavedSongs] = useState([]);
 
+    let developerMode = localStorage.getItem("Developer_Mode");
+    // console.log(developerMode);
+  
+    let API;
+    let liveAPI = "https://spotifindapi.onrender.com";
+    let testAPI = "http://localhost:8181";
+  
+    if (developerMode == "false") {
+      API = liveAPI;
+    } else if (developerMode == "true") {
+      API = testAPI;
+    }
+  
+
+
   const handleAddToLibrary = async (newSavedSong) => {
     try {
-      let API = `http://localhost:8181/library`;
-      const result = await axios.post(API, newSavedSong);
+      const result = await axios.post(API+"/library", newSavedSong);
       setSavedSongs([...savedSongs, result.data]);
     } catch (error) {
       console.log(error);
