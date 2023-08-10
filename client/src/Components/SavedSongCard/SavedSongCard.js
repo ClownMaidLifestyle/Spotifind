@@ -11,7 +11,6 @@ export default function SavedSongCard({
   id,
 }) {
   const preview = new Audio(link);
-
   return (
     <div className="song-card-div">
       <p

@@ -167,7 +167,7 @@ export default function Form() {
 
     window.location = "https://accounts.spotify.com/authorize?" + data;
   }
-
+  console.log("returnedTracks :" + returnedTracks);
   return (
     <div className="main">
       <div className="grid-container">
@@ -178,6 +178,7 @@ export default function Form() {
               title={song[0]}
               artist={song[3] ? song[3].join(", ") : ""}
               prevLink={song[5]}
+              // id={song[]}
               returnedTracks={returnedTracks}
             />
           </div>
