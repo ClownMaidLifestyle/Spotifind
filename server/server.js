@@ -119,9 +119,7 @@ app.get(`/userAuthStage2`, function (request, response) {
     body: body,
   });
 });
-  }
-  response.status(200).json(searchParams)
-});
+  
 
   app.post(`/userAuthStage2`, async function (req, res){
 
