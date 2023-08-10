@@ -202,7 +202,7 @@ export default function Form() {
         </button>
         {/* <Select options={}/> */}
       </form>
-      <button onClick={() => getUserAuth()}>Link Spotify Account</button>
+      <button className="linkbtn" onClick={() => getUserAuth()}>Link Spotify Account</button>
     </div>
   );
 }
