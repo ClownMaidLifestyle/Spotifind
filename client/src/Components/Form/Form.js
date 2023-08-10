@@ -168,7 +168,6 @@ export default function Form() {
 
   return (
     <div className="main">
-      <button className="linkbtn" onClick={() => getUserAuth()}>Link Spotify Account</button>
       <form className="form" onSubmitCapture={(event) => doSearch(event)}>
         <input
           className="input"
@@ -184,14 +183,23 @@ export default function Form() {
           autoFocus={true}
         />
         <div>
-                <input className="yearForm" placeholder="Start Year" onChangeCapture={(event)=> handleStartYear(event)}></input>
-                <input className="yearForm" placeholder="End Year" onChangeCapture={(event)=> handleEndYear(event)}></input>
+          <input
+            placeholder="Start Year"
+            onChangeCapture={(event) => handleStartYear(event)}
+          ></input>
+          <input
+            placeholder="End Year"
+            onChangeCapture={(event) => handleEndYear(event)}
+          ></input>
         </div>
 
         <button className="sub-btn" type="submit">
           Submit
         </button>
       </form>
+      <button className="linkbtn" onClick={() => getUserAuth()}>
+        Link Spotify Account
+      </button>
       <div className="grid-container">
         {returnedTracks.map((song, key) => (
           <div className="grid-item" key={key}>
