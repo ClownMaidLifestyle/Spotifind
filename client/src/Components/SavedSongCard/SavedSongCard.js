@@ -22,6 +22,7 @@ export default function SavedSongCard({
       </p>
       <h2>{title}</h2>
       <p>{artist}</p>
+      { link &&
       <button
         className="play-button"
         onClick={() => {
@@ -29,7 +30,8 @@ export default function SavedSongCard({
         }}
       >
         Preview
-      </button>
+      </button>}
+      { link &&
       <button
         className="pause-button"
         onClick={() => {
@@ -37,7 +39,7 @@ export default function SavedSongCard({
         }}
       >
         Pause
-      </button>
+      </button>}
     </div>
   );
 }
