@@ -16,7 +16,6 @@ export default function Library() {
       let API = `http://localhost:8181/library`;
       const result = await axios.get(API);
       setSavedSongs(result.data);
-      console.log(result.data);
     } catch (error) {
       console.log(error);
     }

@@ -21,28 +21,30 @@ export default function SongCard({
     } catch (error) {
       console.log(error);
     }
-    console.log(returnedTracks);
+    console.log("returnedTrack: " + returnedTracks);
   };
 
   const preview = new Audio(prevLink);
 
   const songToAdd = {
-    title: returnedTracks[0][0],
-    artist: returnedTracks[0][3][0],
-    link: returnedTracks[0][4],
-    uri: returnedTracks[0][5],
-    img_url: returnedTracks[0][2].url,
+    title,
+    artist: artist.split(", ")[0],
+    link: prevLink,
+    uri: songObject[4],
+    img_url: songObject[2].url,
   };
 
   return (
     <div>
       <AddToLibrary
-        songToAdd={songToAdd}
+        // songToAdd={songToAdd}
         handleAddToLibrary={handleAddToLibrary}
         // returnedTracks={returnedTracks}
         title={title}
         artist={artist}
         prevLink={prevLink}
+        // id={_id}
+        songToAdd={songToAdd}
       />
       <h2>{title}</h2>
       <p className="artist">{artist}</p>
