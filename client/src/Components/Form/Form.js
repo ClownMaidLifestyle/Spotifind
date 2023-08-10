@@ -19,7 +19,7 @@ export default function Form() {
 
   let API;
 
-  if (developerMode){
+  if (developerMode == false){
     API = testAPI;
   }
   else{
