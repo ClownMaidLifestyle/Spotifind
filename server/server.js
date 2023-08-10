@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
 const e = require("express");
-const crypto = require("crypto");
+const crypto = require("crypto")
+const queryString = require("querystring");
 
 require("dotenv").config();
 
@@ -96,20 +97,6 @@ app.get("/userAuth", function (request, response) {
     return text;
   }
 
-  let codeVerifier = generateRandomString(256);
-  console.log("code verifier generated");
-
-  async function generateCodeChallenge(codeVerifier) {
-    const digest = crypto
-      .createHash("sha256")
-      .update(codeVerifier)
-      .digest("base64");
-
-    return digest;
-  }
-
-  let codeChallenge = generateCodeChallenge(codeVerifier);
-  console.log("code Challenge generated");
   const searchParams = {
     response_type: "code",
     client_id: clientId,
@@ -117,8 +104,6 @@ app.get("/userAuth", function (request, response) {
       "user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public",
     redirect_uri: redirectURI,
     state: generateRandomString(16),
-    code_challenge_method: `S256`,
-    code_challenge: codeChallenge,
   };
   console.log(searchParams);
   response.status(200).json(searchParams);
@@ -134,16 +119,70 @@ app.get(`/userAuthStage2`, function (request, response) {
     body: body,
   });
 });
+  }
+  response.status(200).json(searchParams)
+});
 
-app.get("/login", function (request, response) {
-  const API = `https://accounts.spotify.com/authorize`;
-  const redirectURI = "https://localhost:8181/";
-  const scopes = [
-    "playlist-read-private",
-    "playlist-read-collaborative",
-    "playlist-modify-private",
-    "playlist-modify-public",
-  ];
+  app.post(`/userAuthStage2`, async function (req, res){
+
+    let client_id = clientId;
+    let client_secret = clientSecret;
+    let code =  req.body.code
+    const authParams = {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: queryString.stringify({
+        code: code,
+        redirect_uri: redirectURI,
+        grant_type:"authorization_code"
+      })
+    }
+
+    try {
+      const response = await fetch('https://accounts.spotify.com/api/token', authParams);
+      const data = await response.json();
+    
+      if (response.ok) {
+        res.json(data);
+      } else {
+        console.error('Error exchanging code for access token:', data);
+      }
+    } catch (error) {
+      console.error('Error exchanging code for access token:', error);
+      res.status(500).json({ error: 'server_error' });
+    }
+    
+  });
+
+app.post("/profile", async function (req, res) {
+  access_Key = "Bearer " + req.body[0]
+  console.log("key " + access_Key)
+  authParams ={
+    headers:{
+      'Authorization' : access_Key
+    }
+  }
+
+  const API = 'https://api.spotify.com/v1/me';
+
+
+  try {
+    const response = await axios.get(API, authParams);
+    const data = await response.data;
+  
+      console.log(data);
+      res.status(200).json(data)
+
+    }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'server_error' });
+  }
+  
+
 });
 
 //MongoDB requests
