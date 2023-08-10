@@ -12,26 +12,23 @@ export default function Form() {
   // const [trackObject, setTrackObject] = useState({});
 
   //turn developerMode FALSE for testing and TRUE before you commit
-  localStorage.setItem("Developer_Mode", false);
-  let developerMode = localStorage.getItem("Developer_Mode")
-  console.log(developerMode)
+  localStorage.setItem("Developer_Mode", true);
+  let developerMode = localStorage.getItem("Developer_Mode");
+  // console.log(developerMode);
 
   let API;
   let liveAPI = "https://spotifindapi.onrender.com";
-  let testAPI = "http://localhost:8181" 
+  let testAPI = "http://localhost:8181";
 
- 
-
-  if (developerMode == "false"){
+  if (developerMode == "false") {
     API = liveAPI;
-  }
-  else if (developerMode == "true"){
+  } else if (developerMode == "true") {
     API = testAPI;
   }
-  console.log(API)
+  // console.log(API);
 
   async function getAuth() {
-    const res = await axios.get(API+"/auth");
+    const res = await axios.get(API + "/auth");
     searchQuery.key = res.data.access_token;
   }
 
@@ -49,6 +46,7 @@ export default function Form() {
   }
 
   let trackList = [];
+  console.log(typeof trackList);
 
   const [searchQuery, setSearchQuery] = useState({
     key: "",
@@ -64,7 +62,7 @@ export default function Form() {
   // }
 
   function handleSearch(event) {
-    console.log(event);
+    // console.log(event);
     setSearchQuery({
       ...searchQuery,
       query: event.target.value,
@@ -86,7 +84,8 @@ export default function Form() {
     let searchValid = false;
     event.preventDefault();
 
-    console.log(searchQuery.genres);
+    // console.log(searchQuery.genres);
+    // see if search query has a genre and then modify the search.
     if (searchQuery.genres) {
       for (let i = 0; i < searchQuery.genres.length; i++) {
         for (let y = 0; y < genres.length; y++) {
@@ -106,16 +105,19 @@ export default function Form() {
 
     if (searchValid) {
       console.log("searching... " + searchQuery);
-      let searchReturn = await axios.post(API+"/search", searchQuery);
+      let searchReturn = await axios.post(API + "/search", searchQuery);
 
-      const tracks = searchReturn.data.tracks.items;
+      // tracks *is* an object
+      //const tracks = searchReturn.data.tracks.items;
 
       console.log(searchReturn);
 
       let resultsNumber = searchReturn.data.tracks.items.length;
       console.log("results number: " + resultsNumber);
+
+      // searchReturn is an object
       searchReturn = searchReturn.data.tracks.items;
-      console.log("returns:" + searchReturn);
+      // console.log("returns:" + searchReturn);
       for (let i = 0; i < resultsNumber; i++) {
         let track = [];
         track.push(searchReturn[i].name);
@@ -141,20 +143,30 @@ export default function Form() {
     if (!trackList) {
       trackList = "null";
     }
+
     setReturnedTracks(trackList);
-    console.log(trackList);
+    console.log("Tracklist: " + trackList);
+    console.log(typeof trackList);
   }
 
-  async function getUserAuth(){
-  let res = await axios.get(API+"/userAuth");
-  console.log(res)
-  console.log(res.data.client_id)
-  let data = "client_id="+res.data.client_id+"&response_type="+res.data.response_type+
-      "&scope="+res.data.scope+"&redirect_uri="+res.data.redirect_uri+"&state="+res.data.state
+  async function getUserAuth() {
+    let res = await axios.get(API + "/userAuth");
+    console.log(res);
+    console.log(res.data.client_id);
+    let data =
+      "client_id=" +
+      res.data.client_id +
+      "&response_type=" +
+      res.data.response_type +
+      "&scope=" +
+      res.data.scope +
+      "&redirect_uri=" +
+      res.data.redirect_uri +
+      "&state=" +
+      res.data.state;
 
-  window.location ="https://accounts.spotify.com/authorize?"+data;
-}
-
+    window.location = "https://accounts.spotify.com/authorize?" + data;
+  }
 
   return (
     <div className="main">
