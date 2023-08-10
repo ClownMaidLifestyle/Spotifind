@@ -48,6 +48,7 @@ export default function SongCard({
       />
       <h2>{title}</h2>
       <p className="artist">{artist}</p>
+      { prevLink &&
       <button
         className="play-button"
         onClick={() => {
@@ -55,7 +56,8 @@ export default function SongCard({
         }}
       >
         Preview
-      </button>
+      </button>}
+      { prevLink &&
       <button
         className="pause-button"
         onClick={() => {
@@ -63,7 +65,7 @@ export default function SongCard({
         }}
       >
         Pause
-      </button>
+      </button>}
     </div>
   );
 }

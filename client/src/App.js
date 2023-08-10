@@ -16,7 +16,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <div className="">
+        <div>
           <Header />
           {/* <LoginButton />
           <LogoutButton />

@@ -79,6 +79,21 @@ export default function Form() {
     }
   };
 
+  const handleStartYear = (selectedYear) =>{
+    console.log(selectedYear)
+    setSearchQuery({
+      ...searchQuery,
+      startYear: selectedYear.target.value,
+    });
+  }
+
+  const handleEndYear = (selectedYear) =>{
+    setSearchQuery({
+      ...searchQuery,
+      endYear: selectedYear.target.value,
+    });
+  }
+
   async function doSearch(event) {
     let genreCheck = 0;
     let searchValid = false;
@@ -170,20 +185,10 @@ export default function Form() {
   console.log("returnedTracks :" + returnedTracks);
   return (
     <div className="main">
-      <div className="grid-container">
-        {returnedTracks.map((song, key) => (
-          <div className="grid-item" key={key}>
-            <SongCard
-              songObject={song}
-              title={song[0]}
-              artist={song[3] ? song[3].join(", ") : ""}
-              prevLink={song[5]}
-              // id={song[]}
-              returnedTracks={returnedTracks}
-            />
-          </div>
-        ))}
-      </div>
+
+      
+
+
       <form className="form" onSubmitCapture={(event) => doSearch(event)}>
         <input
           className="input"
@@ -198,12 +203,35 @@ export default function Form() {
           onChange={handleGenre}
           autoFocus={true}
         />
+        <div>
+                <input placeholder="Start Year" onChangeCapture={(event)=> handleStartYear(event)}></input>
+                <input placeholder="End Year" onChangeCapture={(event)=> handleEndYear(event)}></input>
+        </div>
+        
         <button className="sub-btn" type="submit">
           Submit
         </button>
+
+        
         {/* <Select options={}/> */}
       </form>
-      <button onClick={() => getUserAuth()}>Link Spotify Account</button>
+      <button className="linkbtn" onClick={() => getUserAuth()}>Link Spotify Account</button>
+      <div className="grid-container">
+        {returnedTracks.map((song, key) => (
+          <div className="grid-item" key={key}>
+            <SongCard
+              songObject={song}
+              title={song[0]}
+              artist={song[3] ? song[3].join(", ") : ""}
+              prevLink={song[5]}
+              // id={song[]}
+              returnedTracks={returnedTracks}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
+

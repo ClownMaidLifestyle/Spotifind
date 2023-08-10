@@ -7,6 +7,7 @@ h2 {
   font-weight: 700;
   letter-spacing: 0.2em;
   border-radius: 15px;
+  word-wrap: break-word;
 }
 
 /* .song-card-div {
@@ -25,8 +26,9 @@ h2 {
 .play-button {
   width: auto;
   border: none;
-  background-color: green;
+  color:rgb(95, 164, 145);
   margin-right: 20px;
+  border-radius: 5px;
 }
 
 .pause-button {
@@ -34,6 +36,8 @@ h2 {
   border: none;
   /* background-color: green; */
   margin-right: 20px;
+    border-radius: 5px;
+
 }
 
 #add-button {
