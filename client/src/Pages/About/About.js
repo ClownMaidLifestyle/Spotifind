@@ -28,11 +28,11 @@ export default function About() {
             <br></br>
             &nbsp;{" "}
             <span>
-              The Team: <br></br>
+              The Team: <br></br> <br></br>
             </span>
             Elisa <br></br>
             https://github.com/ClownMaidLifestyle<br></br>
-            Shaylee<br></br>
+            Shaghayegh<br></br>
             https://github.com/shaghayegh-asadi69<br></br>
             https://www.linkedin.com/in/shaghayegh-asadi-167897201/
             <br></br>
@@ -44,7 +44,7 @@ export default function About() {
             <br></br>
             <br></br>
             If you would like to look at the code please feel free at the GitHub
-            link below &nbsp; <br></br>
+            link below &nbsp; <br></br> <br></br> <br></br>
             <a
               className="github"
               href="https://github.com/ClownMaidLifestyle/Spotifind"

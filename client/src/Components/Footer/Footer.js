@@ -3,8 +3,8 @@ import "./Footer.css";
 
 export default function Footer() {
   return (
-    <footer>
-      Elisa, Shaylee, Joe and Nick
+    <footer className="footer-container ">
+      <p className="footer"> Elisa, Shaghayegh, Joe and Nick</p>
     </footer>
   );
 }
