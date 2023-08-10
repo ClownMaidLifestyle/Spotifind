@@ -16,14 +16,15 @@ export default function Callback() {
 
     let API;
   
-    if (developerMode == false){
+    if (developerMode == "false"){
       API = liveAPI;
       callback = liveCallback
     }
-    else{
+    else if ( developerMode == "true"){
       API = testAPI;
       callback = testCallback;
     }
+    
   
 
 

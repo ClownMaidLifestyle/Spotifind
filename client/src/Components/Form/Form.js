@@ -14,18 +14,21 @@ export default function Form() {
   //turn developerMode FALSE for testing and TRUE before you commit
   localStorage.setItem("Developer_Mode", false);
   let developerMode = localStorage.getItem("Developer_Mode")
+  console.log(developerMode)
 
+  let API;
   let liveAPI = "https://spotifindapi.onrender.com";
   let testAPI = "http://localhost:8181" 
 
-  let API;
+ 
 
-  if (developerMode == false){
+  if (developerMode == "false"){
     API = liveAPI;
   }
-  else{
+  else if (developerMode == "true"){
     API = testAPI;
   }
+  console.log(API)
 
   async function getAuth() {
     const res = await axios.get(API+"/auth");
