@@ -7,7 +7,7 @@ const e = require("express");
 const crypto = require("crypto")
 const queryString = require("querystring");
 
-require("dotenv").config();
+require("dotenv").config({path: 'server/.env'});
 
 const PORT = process.env.PORT || 8181;
 const redirectURI = process.env.Redirect_URI;
