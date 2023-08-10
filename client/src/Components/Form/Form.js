@@ -20,10 +20,10 @@ export default function Form() {
   let API;
 
   if (developerMode == false){
-    API = testAPI;
+    API = liveAPI;
   }
   else{
-    API = liveAPI;
+    API = testAPI;
   }
 
   async function getAuth() {
