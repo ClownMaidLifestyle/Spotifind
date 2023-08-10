@@ -171,11 +171,9 @@ app.post("/profile", async function (req, res) {
 
 // CREATE
 app.post("/library", async (request, response) => {
-  console.log("testing create");
   try {
     const newSavedSong = await Song.create(request.body);
     response.status(200).json(newSavedSong);
-    console.log(newSavedSong);
   } catch (error) {
     response.status(500).json(error);
   }
@@ -193,10 +191,8 @@ app.get("/library", async (request, response) => {
 
 //DELETE
 app.delete("/library/:_id", async (request, response) => {
-  console.log("test " + request);
   try {
     const id = request.params._id;
-    console.log(id);
     const deleteSong = await Song.findByIdAndDelete(id);
     response.status(200).send(deleteSong);
   } catch (error) {

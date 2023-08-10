@@ -9,7 +9,6 @@ import { genres } from "./genres";
 
 export default function Form() {
   const [returnedTracks, setReturnedTracks] = useState([]);
-  // const [trackObject, setTrackObject] = useState({});
 
   //turn developerMode FALSE for testing and TRUE before you commit
   localStorage.setItem("Developer_Mode", false);
@@ -46,7 +45,6 @@ export default function Form() {
   }
 
   let trackList = [];
-  console.log(typeof trackList);
 
   const [searchQuery, setSearchQuery] = useState({
     key: "",
@@ -57,12 +55,7 @@ export default function Form() {
     genres: [],
   });
 
-  // async function spotifyLogin() {
-  //   const API = "http://localhost:8181/login";
-  // }
-
   function handleSearch(event) {
-    // console.log(event);
     setSearchQuery({
       ...searchQuery,
       query: event.target.value,
@@ -79,28 +72,26 @@ export default function Form() {
     }
   };
 
-  const handleStartYear = (selectedYear) =>{
-    console.log(selectedYear)
+  const handleStartYear = (selectedYear) => {
+    console.log(selectedYear);
     setSearchQuery({
       ...searchQuery,
       startYear: selectedYear.target.value,
     });
-  }
+  };
 
-  const handleEndYear = (selectedYear) =>{
+  const handleEndYear = (selectedYear) => {
     setSearchQuery({
       ...searchQuery,
       endYear: selectedYear.target.value,
     });
-  }
+  };
 
   async function doSearch(event) {
     let genreCheck = 0;
     let searchValid = false;
     event.preventDefault();
 
-    // console.log(searchQuery.genres);
-    // see if search query has a genre and then modify the search.
     if (searchQuery.genres) {
       for (let i = 0; i < searchQuery.genres.length; i++) {
         for (let y = 0; y < genres.length; y++) {
@@ -122,17 +113,13 @@ export default function Form() {
       console.log("searching... " + searchQuery);
       let searchReturn = await axios.post(API + "/search", searchQuery);
 
-      // tracks *is* an object
-      //const tracks = searchReturn.data.tracks.items;
-
       console.log(searchReturn);
 
       let resultsNumber = searchReturn.data.tracks.items.length;
       console.log("results number: " + resultsNumber);
 
-      // searchReturn is an object
       searchReturn = searchReturn.data.tracks.items;
-      // console.log("returns:" + searchReturn);
+
       for (let i = 0; i < resultsNumber; i++) {
         let track = [];
         track.push(searchReturn[i].name);
@@ -160,14 +147,10 @@ export default function Form() {
     }
 
     setReturnedTracks(trackList);
-    console.log("Tracklist: " + trackList);
-    console.log(typeof trackList);
   }
 
   async function getUserAuth() {
     let res = await axios.get(API + "/userAuth");
-    console.log(res);
-    console.log(res.data.client_id);
     let data =
       "client_id=" +
       res.data.client_id +
@@ -182,13 +165,9 @@ export default function Form() {
 
     window.location = "https://accounts.spotify.com/authorize?" + data;
   }
-  console.log("returnedTracks :" + returnedTracks);
+
   return (
     <div className="main">
-
-      
-
-
       <form className="form" onSubmitCapture={(event) => doSearch(event)}>
         <input
           className="input"
@@ -204,18 +183,23 @@ export default function Form() {
           autoFocus={true}
         />
         <div>
-                <input placeholder="Start Year" onChangeCapture={(event)=> handleStartYear(event)}></input>
-                <input placeholder="End Year" onChangeCapture={(event)=> handleEndYear(event)}></input>
+          <input
+            placeholder="Start Year"
+            onChangeCapture={(event) => handleStartYear(event)}
+          ></input>
+          <input
+            placeholder="End Year"
+            onChangeCapture={(event) => handleEndYear(event)}
+          ></input>
         </div>
-        
+
         <button className="sub-btn" type="submit">
           Submit
         </button>
-
-        
-        {/* <Select options={}/> */}
       </form>
-      <button className="linkbtn" onClick={() => getUserAuth()}>Link Spotify Account</button>
+      <button className="linkbtn" onClick={() => getUserAuth()}>
+        Link Spotify Account
+      </button>
       <div className="grid-container">
         {returnedTracks.map((song, key) => (
           <div className="grid-item" key={key}>
@@ -224,7 +208,6 @@ export default function Form() {
               title={song[0]}
               artist={song[3] ? song[3].join(", ") : ""}
               prevLink={song[5]}
-              // id={song[]}
               returnedTracks={returnedTracks}
             />
           </div>
@@ -233,5 +216,3 @@ export default function Form() {
     </div>
   );
 }
-
-

@@ -8,34 +8,29 @@ export default function SongCard({
   title,
   artist,
   prevLink,
-  trackObject,
   returnedTracks,
 }) {
   const [savedSongs, setSavedSongs] = useState([]);
 
-    let developerMode = localStorage.getItem("Developer_Mode");
-    // console.log(developerMode);
-  
-    let API;
-    let liveAPI = "https://spotifindapi.onrender.com";
-    let testAPI = "http://localhost:8181";
-  
-    if (developerMode == "false") {
-      API = liveAPI;
-    } else if (developerMode == "true") {
-      API = testAPI;
-    }
-  
+  let developerMode = localStorage.getItem("Developer_Mode");
 
+  let API;
+  let liveAPI = "https://spotifindapi.onrender.com";
+  let testAPI = "http://localhost:8181";
+
+  if (developerMode == "false") {
+    API = liveAPI;
+  } else if (developerMode == "true") {
+    API = testAPI;
+  }
 
   const handleAddToLibrary = async (newSavedSong) => {
     try {
-      const result = await axios.post(API+"/library", newSavedSong);
+      const result = await axios.post(API + "/library", newSavedSong);
       setSavedSongs([...savedSongs, result.data]);
     } catch (error) {
       console.log(error);
     }
-    console.log("returnedTrack: " + returnedTracks);
   };
 
   const preview = new Audio(prevLink);
@@ -51,35 +46,34 @@ export default function SongCard({
   return (
     <div>
       <AddToLibrary
-        // songToAdd={songToAdd}
         handleAddToLibrary={handleAddToLibrary}
-        // returnedTracks={returnedTracks}
         title={title}
         artist={artist}
         prevLink={prevLink}
-        // id={_id}
         songToAdd={songToAdd}
       />
       <h2>{title}</h2>
       <p className="artist">{artist}</p>
-      { prevLink &&
-      <button
-        className="play-button"
-        onClick={() => {
-          preview.play();
-        }}
-      >
-        Preview
-      </button>}
-      { prevLink &&
-      <button
-        className="pause-button"
-        onClick={() => {
-          preview.pause();
-        }}
-      >
-        Pause
-      </button>}
+      {prevLink && (
+        <button
+          className="play-button"
+          onClick={() => {
+            preview.play();
+          }}
+        >
+          Preview
+        </button>
+      )}
+      {prevLink && (
+        <button
+          className="pause-button"
+          onClick={() => {
+            preview.pause();
+          }}
+        >
+          Pause
+        </button>
+      )}
     </div>
   );
 }
