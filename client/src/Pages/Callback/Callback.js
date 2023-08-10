@@ -41,7 +41,7 @@ export default function Callback() {
         let stage2payload = {
             code: localStorage.getItem('userAuthCode')
         };
-        const res = await axios.post(API+"/userAuthStage2", stage2payload);
+        const res = await axios.post(`${API}/userAuthStage2`, stage2payload);
         console.log(res);
         let localStore_User_Access_key = [];
         localStore_User_Access_key.push(res.data.access_token, res.data.expires_in, res.data.refresh_token, res.data.scope, res.data.token_type);
