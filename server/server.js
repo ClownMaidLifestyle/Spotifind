@@ -7,10 +7,7 @@ const e = require("express");
 const crypto = require("crypto")
 const queryString = require("querystring");
 
-require("dotenv").config({path: 'server/.env'});
-
-const PORT = process.env.PORT || 8181;
-const redirectURI = process.env.Redirect_URI;
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -25,7 +22,8 @@ app.get("/", (request, response) => {
 });
 
 //Spotify API requests
-
+const PORT = process.env.PORT || 8181;
+const redirectURI = process.env.Redirect_URI;
 const clientId = process.env.Client_Id;
 const clientSecret = process.env.Client_Secret;
 
