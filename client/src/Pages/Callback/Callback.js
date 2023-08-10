@@ -25,7 +25,7 @@ export default function Callback() {
       callback = testCallback;
     }
     
-  
+  console.log(API);
 
 
     useEffect(()=>{
