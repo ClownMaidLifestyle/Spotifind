@@ -56,7 +56,7 @@ export default function Callback() {
         console.log(res)
         localStorage.setItem("display_name", res.display_name)
         localStorage.setItem("user_ID", res.id)
-        window.location=callback;
+        window.location="client/src/index";
     }
   return (
 <>
