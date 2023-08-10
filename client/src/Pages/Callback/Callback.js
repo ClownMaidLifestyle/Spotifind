@@ -5,6 +5,22 @@ import axios from "axios"
 
 export default function Callback() {
 
+    developerMode = localStorage.getItem("Developer_Mode")
+
+    let liveAPI = "https://spotifindapi.onrender.com";
+    let testAPI = "http://localhost:8181" 
+  
+    let API;
+  
+    if (developerMode == false){
+      API = liveAPI;
+    }
+    else{
+      API = testAPI;
+    }
+  
+
+
     useEffect(()=>{
     const urlParams = new URLSearchParams(window.location.search);
     let code = urlParams.get('code');

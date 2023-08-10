@@ -12,7 +12,8 @@ export default function Form() {
   // const [trackObject, setTrackObject] = useState({});
 
   //turn developerMode FALSE for testing and TRUE before you commit
-  let developerMode = false;
+  localStorage.setItem("Developer_Mode", false);
+  developerMode = localStorage.getItem("Developer_Mode")
 
   let liveAPI = "https://spotifindapi.onrender.com";
   let testAPI = "http://localhost:8181" 
