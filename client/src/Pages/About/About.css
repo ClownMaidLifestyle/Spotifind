@@ -30,13 +30,11 @@ p {
   align-items: center;
   justify-content: center;
   word-spacing: 1.5px;
-  width: 80%;
+
   line-height: 35px;
   letter-spacing: 1px;
 }
 .description {
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -47,9 +45,8 @@ p {
   transition: all linear 0.5s;
   cursor: pointer;
 }
-.github {
+a {
   color: white;
-  margin: 20px;
 }
 span {
   font-size: large;
