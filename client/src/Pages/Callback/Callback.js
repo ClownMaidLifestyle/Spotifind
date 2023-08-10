@@ -28,11 +28,12 @@ export default function Callback() {
     }
 
     async function stage3(localStore_User_Access_key){
-        const res = await axios.post("http://localhost:8181/profile", localStore_User_Access_key);
-        const profileData = res.data;
-        console.log(profileData)
-        
-
+        let res = await axios.post("http://localhost:8181/profile", localStore_User_Access_key);
+        res = res.data
+        console.log(res)
+        localStorage.setItem("display_name", res.display_name)
+        localStorage.setItem("user_ID", res.id)
+        window.location="http://localhost:3000/"
     }
   return (
 <>
@@ -45,7 +46,7 @@ export default function Callback() {
       <link rel="canonical" href="/" />
     </Helmet>
     <main>
-        <button onClick={() => stage2()}>ENTER.... STAGE TWO!!!!</button>
+        <button onClick={() => stage2()}>Connect Spotify Profile</button>
     </main>
   </>
   )

@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import logo from "../Images/img.png"
 
 const Header = () => {
+  let userData = localStorage.getItem("display_name");
+  let displayName = userData
+  console.log(displayName)
   return (
     <header className="navbar">
       <nav>
@@ -23,6 +26,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
+      {displayName && <div>Welcome, {displayName}</div>}
     </header>
   );
 };

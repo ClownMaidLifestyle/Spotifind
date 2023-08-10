@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bp.json());
 
 const Song = require("./models/song");
-mongoose.connect(process.env.DATABASE_URL);
+//mongoose.connect(process.env.DATABASE_URL);
 
 //Health Check
 app.get("/", (request, response) => {
