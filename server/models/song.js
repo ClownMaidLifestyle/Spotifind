@@ -8,7 +8,6 @@ const songSchema = new Schema({
   link: String,
   uri: String,
   img_url: String,
-  user_id: String,
 });
 
 const Song = mongoose.model("Song", songSchema);
