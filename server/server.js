@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bp = require("body-parser");
 const axios = require("axios");
 const e = require("express");
-const crypto = require("crypto")
+const crypto = require("crypto");
 const queryString = require("querystring");
 
 require("dotenv").config();
@@ -107,72 +107,71 @@ app.get("/userAuth", function (request, response) {
   response.status(200).json(searchParams);
 });
 
-  app.post(`/userAuthStage2`, async function (req, res){
+app.post(`/userAuthStage2`, async function (req, res) {
+  let client_id = clientId;
+  let client_secret = clientSecret;
+  let code = req.body.code;
+  const authParams = {
+    method: "POST",
+    headers: {
+      Authorization:
+        "Basic " +
+        Buffer.from(`${client_id}:${client_secret}`).toString("base64"),
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: queryString.stringify({
+      code: code,
+      redirect_uri: redirectURI,
+      grant_type: "authorization_code",
+    }),
+  };
 
-    let client_id = clientId;
-    let client_secret = clientSecret;
-    let code =  req.body.code
-    const authParams = {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: queryString.stringify({
-        code: code,
-        redirect_uri: redirectURI,
-        grant_type:"authorization_code"
-      })
-    }
+  try {
+    const response = await fetch(
+      "https://accounts.spotify.com/api/token",
+      authParams
+    );
+    const data = await response.json();
 
-    try {
-      const response = await fetch('https://accounts.spotify.com/api/token', authParams);
-      const data = await response.json();
-    
-      if (response.ok) {
-        res.json(data);
-      } else {
-        console.error('Error exchanging code for access token:', data);
-      }
-    } catch (error) {
-      console.error('Error exchanging code for access token:', error);
-      res.status(500).json({ error: 'server_error' });
+    if (response.ok) {
+      res.json(data);
+    } else {
+      console.error("Error exchanging code for access token:", data);
     }
-    
-  });
+  } catch (error) {
+    console.error("Error exchanging code for access token:", error);
+    res.status(500).json({ error: "server_error" });
+  }
+});
 
 app.post("/profile", async function (req, res) {
-  access_Key = "Bearer " + req.body[0]
-  console.log("key " + access_Key)
-  authParams ={
-    headers:{
-      'Authorization' : access_Key
-    }
-  }
+  access_Key = "Bearer " + req.body[0];
+  console.log("key " + access_Key);
+  authParams = {
+    headers: {
+      Authorization: access_Key,
+    },
+  };
 
-  const API = 'https://api.spotify.com/v1/me';
-
+  const API = "https://api.spotify.com/v1/me";
 
   try {
     const response = await axios.get(API, authParams);
     const data = await response.data;
-  
-      console.log(data);
-      res.status(200).json(data)
 
-    }
-  catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'server_error' });
+    console.log(data);
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "server_error" });
   }
-  
-
 });
 
 //MongoDB requests
 
 // CREATE
 app.post("/library", async (request, response) => {
+  console.log("testing create");
   try {
     const newSavedSong = await Song.create(request.body);
     response.status(200).json(newSavedSong);
@@ -198,7 +197,7 @@ app.delete("/library/:_id", async (request, response) => {
   try {
     const id = request.params._id;
     console.log(id);
-    const deleteSong = await Book.findByIdAndDelete(id);
+    const deleteSong = await Song.findByIdAndDelete(id);
     response.status(200).send(deleteSong);
   } catch (error) {
     console.log(error);
