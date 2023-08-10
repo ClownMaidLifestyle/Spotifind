@@ -3,25 +3,42 @@ import "./SavedSongCard.css";
 import axios from "axios";
 
 export default function SavedSongCard({
-  songObject,
+  handleRemoveFromLibrary,
   title,
   artist,
-  getSavedSongs,
-  handleRemoveFromLibrary,
+  link,
+  uri,
+  id,
 }) {
-  //   console.log(songObject);
+  const preview = new Audio(link);
 
   return (
     <div className="song-card-div">
-      <h5
+      <p
+        id="add-button"
         className="delete-button"
-        onClick={() => handleRemoveFromLibrary(songObject.id)}
+        onClick={() => handleRemoveFromLibrary(id)}
       >
         -
-      </h5>
+      </p>
       <h2>{title}</h2>
       <p>{artist}</p>
-      <button className="play-button">Preview</button>
+      <button
+        className="play-button"
+        onClick={() => {
+          preview.play();
+        }}
+      >
+        Preview
+      </button>
+      <button
+        className="pause-button"
+        onClick={() => {
+          preview.pause();
+        }}
+      >
+        Pause
+      </button>
     </div>
   );
 }
