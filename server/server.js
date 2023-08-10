@@ -7,7 +7,6 @@ const e = require("express");
 const crypto = require("crypto")
 const queryString = require("querystring");
 
-
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8181;
@@ -17,6 +16,7 @@ const app = express();
 app.use(cors());
 app.use(bp.json());
 
+const Song = require("./models/song");
 mongoose.connect(process.env.DATABASE_URL);
 
 //Health Check
@@ -71,7 +71,6 @@ app.post(`/search`, async (request, response) => {
       (request.body.startYear || request.body.endYear);
   }
 
-
   const API = `https://api.spotify.com/v1/search?q=`;
   const searchParameters = {
     headers: {
@@ -86,12 +85,12 @@ app.post(`/search`, async (request, response) => {
     .then((data) => response.status(200).json(data));
 });
 
-app.get('/userAuth', function(request, response){
-
+app.get("/userAuth", function (request, response) {
   function generateRandomString(length) {
-    let text = '';
-    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
+    let text = "";
+    let possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     for (let i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
@@ -99,11 +98,27 @@ app.get('/userAuth', function(request, response){
   }
 
   const searchParams = {
-    response_type: 'code',
+    response_type: "code",
     client_id: clientId,
-    scope: 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public',
+    scope:
+      "user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public",
     redirect_uri: redirectURI,
     state: generateRandomString(16),
+  };
+  console.log(searchParams);
+  response.status(200).json(searchParams);
+});
+
+app.get(`/userAuthStage2`, function (request, response) {
+  let body = "grant_type=authorization_code" + "&code=";
+  fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-url",
+    },
+    body: body,
+  });
+});
   }
   response.status(200).json(searchParams)
 });
@@ -175,8 +190,9 @@ app.post("/profile", async function (req, res) {
 // CREATE
 app.post("/library", async (request, response) => {
   try {
-    const newSavedSong = await SongCard.create(request.body);
+    const newSavedSong = await Song.create(request.body);
     response.status(200).json(newSavedSong);
+    console.log(newSavedSong);
   } catch (error) {
     response.status(500).json(error);
   }
