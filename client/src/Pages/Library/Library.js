@@ -10,7 +10,6 @@ export default function Library() {
     getSavedSongs();
   }, []);
 
-  //READ
   async function getSavedSongs() {
     try {
       let API = `http://localhost:8181/library`;
@@ -21,7 +20,6 @@ export default function Library() {
     }
   }
 
-  //DELETE
   const handleRemoveFromLibrary = async (id) => {
     await axios.delete(`http://localhost:8181/library/${id}`);
     getSavedSongs();

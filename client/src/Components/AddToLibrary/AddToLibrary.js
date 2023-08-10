@@ -2,13 +2,15 @@ import React from "react";
 import "./AddToLibrary.css";
 
 export default function AddToLibrary({ handleAddToLibrary, songToAdd }) {
-  // console.log("song: " + songToAdd);
-  // console.log("TEST: " + songToAdd[0]);
+  let localId = localStorage.getItem("user_ID");
+
   return (
     <div className="song-card-div">
-      <p id="add-button" onClick={() => handleAddToLibrary(songToAdd)}>
-        +
-      </p>
+      {
+        <p id="add-button" onClick={() => handleAddToLibrary(songToAdd)}>
+          +
+        </p>
+      }
     </div>
   );
 }
