@@ -11,7 +11,6 @@ h2 {
 
 .song-card-div {
   display: flex;
-  flex-direction: column;
 }
 
 p {
@@ -24,15 +23,18 @@ p {
 }
 
 .play-button {
-  width: auto;
   border: none;
   color: #fff;
-  background-color: rgb(95, 164, 145);;
-  margin: 2px;
+  background-color: rgb(95, 164, 145);
+  margin-right: 20px;
+  border-radius: 5px;
+  align-items: center;
+
 }
 
 h5 {
-    text-align: center;
+  width: 15px;
+  text-align: center;
   font-size: 50px;
   font-weight: 900;
   transition: 0.1s;
