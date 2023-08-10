@@ -109,18 +109,6 @@ app.get("/userAuth", function (request, response) {
   response.status(200).json(searchParams);
 });
 
-app.get(`/userAuthStage2`, function (request, response) {
-  let body = "grant_type=authorization_code" + "&code=";
-  fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-url",
-    },
-    body: body,
-  });
-});
-  
-
   app.post(`/userAuthStage2`, async function (req, res){
 
     let client_id = clientId;

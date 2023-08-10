@@ -9,14 +9,20 @@ export default function Callback() {
 
     let liveAPI = "https://spotifindapi.onrender.com";
     let testAPI = "http://localhost:8181" 
-  
+
+    let liveCallback = "https://spotifind-search.netlify.app/callback"
+    let testCallback = "http://localhost:3000/callback"
+    let callback;
+
     let API;
   
     if (developerMode == false){
       API = liveAPI;
+      callback = liveCallback
     }
     else{
       API = testAPI;
+      callback = testCallback;
     }
   
 
@@ -49,7 +55,7 @@ export default function Callback() {
         console.log(res)
         localStorage.setItem("display_name", res.display_name)
         localStorage.setItem("user_ID", res.id)
-        window.location="http://localhost:3000/"
+        window.location=callback;
     }
   return (
 <>
