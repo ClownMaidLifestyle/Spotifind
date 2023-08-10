@@ -8,7 +8,6 @@ export default function Library() {
 
   useEffect(() => {
     getSavedSongs();
-    console.log(savedSongs);
   }, []);
 
   //READ
@@ -16,9 +15,8 @@ export default function Library() {
     try {
       let API = `http://localhost:8181/library`;
       const result = await axios.get(API);
-      setSavedSongs([]);
       setSavedSongs(result.data);
-      console.log(savedSongs);
+      console.log(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +40,20 @@ export default function Library() {
           <link rel="canonical" href="/library" />
         </Helmet>
         <main>
-          <SavedSongCard handleRemoveFromLibrary={handleRemoveFromLibrary} />
+          <div className="grid-container">
+            {savedSongs.map((item, key) => (
+              <div className="grid-item" key={key}>
+                <SavedSongCard
+                  title={item.title}
+                  artist={item.artist}
+                  link={item.link}
+                  uri={item.uri}
+                  id={item._id}
+                  handleRemoveFromLibrary={handleRemoveFromLibrary}
+                />
+              </div>
+            ))}
+          </div>
         </main>
       </>
     </div>
