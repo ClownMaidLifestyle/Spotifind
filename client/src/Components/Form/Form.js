@@ -11,9 +11,23 @@ export default function Form() {
   const [returnedTracks, setReturnedTracks] = useState([]);
   // const [trackObject, setTrackObject] = useState({});
 
+  //turn developerMode FALSE for testing and TRUE before you commit
+  let developerMode = FALSE;
+
+  let liveAPI = "https://spotifindapi.onrender.com";
+  let testAPI = "http://localhost:8181" 
+
+  let API;
+
+  if (developerMode){
+    API = testAPI;
+  }
+  else{
+    API = liveAPI;
+  }
+
   async function getAuth() {
-    const API = "http://localhost:8181/auth";
-    const res = await axios.get(API);
+    const res = await axios.get(API+"/auth");
     searchQuery.key = res.data.access_token;
   }
 
@@ -88,8 +102,7 @@ export default function Form() {
 
     if (searchValid) {
       console.log("searching... " + searchQuery);
-      const API = "http://localhost:8181/search";
-      let searchReturn = await axios.post(API, searchQuery);
+      let searchReturn = await axios.post(API+"/search", searchQuery);
 
       const tracks = searchReturn.data.tracks.items;
 
@@ -129,8 +142,7 @@ export default function Form() {
   }
 
   async function getUserAuth(){
-  const API = "http://localhost:8181/userAuth"
-  let res = await axios.get(API);
+  let res = await axios.get(API+"/userAuth");
   console.log(res)
   console.log(res.data.client_id)
   let data = "client_id="+res.data.client_id+"&response_type="+res.data.response_type+
