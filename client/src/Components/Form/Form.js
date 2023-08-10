@@ -174,7 +174,7 @@ export default function Form() {
         </button>
         {/* <Select options={}/> */}
       </form>
-      <button onClick={() => getUserAuth()}>The magic User Auth button</button>
+      <button onClick={() => getUserAuth()}>Link Spotify Account</button>
     </div>
   );
 }
