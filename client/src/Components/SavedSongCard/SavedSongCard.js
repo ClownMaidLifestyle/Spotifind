@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./SavedSongCard.css";
-import axios from "axios";
 
 export default function SavedSongCard({
   handleRemoveFromLibrary,
@@ -22,24 +21,26 @@ export default function SavedSongCard({
       </p>
       <h2>{title}</h2>
       <p>{artist}</p>
-      { link &&
-      <button
-        className="play-button"
-        onClick={() => {
-          preview.play();
-        }}
-      >
-        Preview
-      </button>}
-      { link &&
-      <button
-        className="pause-button"
-        onClick={() => {
-          preview.pause();
-        }}
-      >
-        Pause
-      </button>}
+      {link && (
+        <button
+          className="play-button"
+          onClick={() => {
+            preview.play();
+          }}
+        >
+          Preview
+        </button>
+      )}
+      {link && (
+        <button
+          className="pause-button"
+          onClick={() => {
+            preview.pause();
+          }}
+        >
+          Pause
+        </button>
+      )}
     </div>
   );
 }
