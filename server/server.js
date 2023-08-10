@@ -10,7 +10,7 @@ const queryString = require("querystring");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8181;
-const redirectURI = "http://localhost:3000/callback" || process.env.Redirect_URI;
+const redirectURI = process.env.Redirect_URI;
 
 const app = express();
 app.use(cors());
