@@ -185,19 +185,6 @@ export default function Form() {
 
   return (
     <div className="main">
-      <div className="grid-container">
-        {returnedTracks.map((song, key) => (
-          <div className="grid-item" key={key}>
-            <SongCard
-              songObject={song}
-              title={song[0]}
-              artist={song[3] ? song[3].join(", ") : ""}
-              prevLink={song[5]}
-              returnedTracks={returnedTracks}
-            />
-          </div>
-        ))}
-      </div>
       <form className="form" onSubmitCapture={(event) => doSearch(event)}>
         <input
           className="input"
@@ -225,6 +212,19 @@ export default function Form() {
         {/* <Select options={}/> */}
       </form>
       <button onClick={() => getUserAuth()}>Link Spotify Account</button>
+      <div className="grid-container">
+        {returnedTracks.map((song, key) => (
+          <div className="grid-item" key={key}>
+            <SongCard
+              songObject={song}
+              title={song[0]}
+              artist={song[3] ? song[3].join(", ") : ""}
+              prevLink={song[5]}
+              returnedTracks={returnedTracks}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
