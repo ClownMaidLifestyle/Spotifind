@@ -79,6 +79,21 @@ export default function Form() {
     }
   };
 
+  const handleStartYear = (selectedYear) =>{
+    console.log(selectedYear)
+    setSearchQuery({
+      ...searchQuery,
+      startYear: selectedYear.target.value,
+    });
+  }
+
+  const handleEndYear = (selectedYear) =>{
+    setSearchQuery({
+      ...searchQuery,
+      endYear: selectedYear.target.value,
+    });
+  }
+
   async function doSearch(event) {
     let genreCheck = 0;
     let searchValid = false;
@@ -197,9 +212,16 @@ export default function Form() {
           onChange={handleGenre}
           autoFocus={true}
         />
+        <div>
+                <input placeholder="Start Year" onChangeCapture={(event)=> handleStartYear(event)}></input>
+                <input placeholder="End Year" onChangeCapture={(event)=> handleEndYear(event)}></input>
+        </div>
+        
         <button className="sub-btn" type="submit">
           Submit
         </button>
+
+        
         {/* <Select options={}/> */}
       </form>
       <button onClick={() => getUserAuth()}>Link Spotify Account</button>
