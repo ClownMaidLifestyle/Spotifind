@@ -25,8 +25,9 @@ h2 {
 .play-button {
   width: auto;
   border: none;
-  background-color: green;
+  color:rgb(95, 164, 145);
   margin-right: 20px;
+  border-radius: 5px;
 }
 
 .pause-button {
@@ -34,6 +35,8 @@ h2 {
   border: none;
   /* background-color: green; */
   margin-right: 20px;
+    border-radius: 5px;
+
 }
 
 #add-button {

@@ -89,3 +89,6 @@ main {
   color: black;
   transition: all 0.1s linear;
 }
+.grid-item{
+  background-color: #060505;
+}
