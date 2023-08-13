@@ -28,7 +28,7 @@ AuthO
 
 ## Instructions to run
 
-```bash
+```
 cd server
 npm i 
 npm start
