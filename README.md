@@ -13,7 +13,7 @@ Spotifind will allow users to more accurately search songs
 
 ## Versioning:
 
-???
+1.0.0
 
 ## Libraries and dependencies
 
@@ -44,7 +44,15 @@ npm start
 
 ## API endpoints
 
+- "/" Health Check
+- "/auth" get client credential (no user data)
+- "/search" Fetch Search Query results
+- "/userAuth" redirects user to spotify authorisation to grant permissions to spotifind
+- "/userAuthStage2" retrieve user access key
+- "/profile" retrieve user profile information
 
+- "/library" - MongoDB management
+= "/library/:_id/" - Delete Songs from MongoDB
 
 ## Database Schemas
 
