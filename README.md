@@ -1,4 +1,4 @@
-### Spotifind
+### [Spotifind](https://spotifind-search.netlify.app/)
 
 # Shaghayegh Asadi, Elisa Edson, Joe Jardine, Nicholas Lewis
 
